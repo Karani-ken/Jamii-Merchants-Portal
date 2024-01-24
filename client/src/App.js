@@ -2,7 +2,9 @@ import './App.css';
 import AdminDasboard from './components/AdminDasboard';
 import { Register } from './components/Register';
 import Sidebar from './components/Sidebar';
+import Login from './components/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import AddSerial from './components/AddSerial';
 function App() {
   return (
     <div className="App">
@@ -11,6 +13,8 @@ function App() {
         <Routes>
             <Route path='/' element={<AdminDasboard />} />
             <Route path='/register' element={<Register/>}/>
+            <Route path='/login' element={<Login/>} /> 
+            <Route path='/assign-serial' element={<AddSerial/>}/>          
         </Routes>
       </Router>
 

@@ -14,6 +14,8 @@ function AdminDasboard() {
           <h2>20</h2>
           <p>Allocated serials</p>
         </div>
+        <Link to='register' className='btn btn-primary'
+        style={{background:'#000', border: 'none'}}>Add Agent</Link>
       </div>
       <div className='table-responsive p-3 mx-5'>
       <table className='table table-striped-columns table-hover'>

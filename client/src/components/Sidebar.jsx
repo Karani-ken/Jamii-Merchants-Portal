@@ -15,11 +15,10 @@ const Sidebar = () => {
                 <div className="links">
                     <ul>
                         <li><Link to='/' ><a>Dashboard</a></Link></li>
-                        <li> <a href="#">Agents</a></li>
-                        <li> <a href="#">Reports</a></li>   
-                        <Link to='/register' className='btn custom-btn'>Log in</Link>                 
+                        <li> <a href="#">Reports</a></li>
+                        <Link to='/register' className='btn custom-btn'>Log in</Link>
                     </ul>
-                  
+
                 </div>
             </div>
 
