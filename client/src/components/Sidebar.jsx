@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 const Sidebar = () => {
     return (
         <div>
@@ -14,10 +14,10 @@ const Sidebar = () => {
                 </span>
                 <div className="links">
                     <ul>
-                        <li> <a href="#">Dashboard</a></li>
+                        <li><Link to='/' ><a>Dashboard</a></Link></li>
                         <li> <a href="#">Agents</a></li>
                         <li> <a href="#">Reports</a></li>   
-                        <button className='btn custom-btn'>Log out</button>                 
+                        <Link to='/register' className='btn custom-btn'>Log in</Link>                 
                     </ul>
                   
                 </div>

@@ -1,8 +1,8 @@
 .sidebar{
   position: fixed;
   background-color: #048243;
-  left: -300px;
-  width: 300px;
+  left: -250px;
+  width: 250px;
   color: #fff;
   height: 100vh;
   transition: all .2s ease;
@@ -75,7 +75,7 @@ label #cancel{
   pointer-events: none;
 }
 #check:checked ~ label #cancel{
-  left: 230px;
+  left: 200px;
 }
 .custom-btn{
   border: 1px solid #fff;
@@ -101,4 +101,17 @@ label #cancel{
   width: 120px;
   padding: 3px;
   margin: 20px;
+}
+.input-form{
+  margin: 5% 20%;
+  box-shadow: 5px 5px  5px 5px #048243;
+  border-radius: 20px;
+}
+@media only screen and (max-width: 767px) {
+  .input-form{
+   margin: 9% 3%;   
+  }
+  .sidebar{
+    height: 75%;
+  }
 }
