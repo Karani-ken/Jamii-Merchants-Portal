@@ -13,7 +13,7 @@ function AgentDashboard() {
           <h2>20</h2>
           <p>Allocated serials</p>
         </div>
-        <Link to='register' className='btn btn-primary'
+        <Link to='add-user' className='btn btn-primary'
         style={{background:'#000', border: 'none'}}>Add client</Link>
       </div>
     </div>
