@@ -46,6 +46,16 @@ const createTableIfNotExists = async ()=>{
     }
 }
 
+const insertUser = async (userData) =>{
+    const {name, email, password, phone} = userData;
+    try {
+        await executeQuery(queries.insertUsersQuery, [name, email,password,phone]);
+        console.log('user added successfully')
+    } catch (error) {
+        throw error;
+    }
+}
+
 const initializeDatabase = async ()=>{
     try {
         await createDatabaseIfNotExists()
@@ -59,5 +69,6 @@ const initializeDatabase = async ()=>{
 
 module.exports ={
     pool,
-    initializeDatabase
+    initializeDatabase,
+    insertUser
 }

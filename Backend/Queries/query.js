@@ -13,12 +13,14 @@ const createUserTableQuery = `CREATE TABLE users (
 )
 `
 const useDatabaseQuery = `USE ${dbConfig.database}`;
+const insertUsersQuery = 'INSERT INTO users (name, email,password,phone) VALUES (?, ?, ?, ?)';
 
 module.exports = {
     createDatabase,
     showDatabases,
     showUsersTableQuery,
     createUserTableQuery,
-    useDatabaseQuery
+    useDatabaseQuery,
+    insertUsersQuery
 
 }
