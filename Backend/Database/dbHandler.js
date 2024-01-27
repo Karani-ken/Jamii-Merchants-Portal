@@ -32,8 +32,7 @@ const createDatabaseIfNotExists = async () =>{
 }
 const createTableIfNotExists = async ()=>{
     try {
-        const result = await executeQuery(queries.showUsersTableQuery)
-        console.log(result)
+        const result = await executeQuery(queries.showUsersTableQuery)       
         const tableExists = result.length > 0;
         if(!tableExists){
             await executeQuery(queries.createUserTableQuery);
@@ -58,6 +57,14 @@ const insertUser = async (userData) =>{
 const selectUserByEmail = async (email) =>{
     try {
        const result = await executeQuery(queries.selectUserByEmail, [email]);           
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+const selectUserByRole = async (role) =>{
+    try {
+       const result = await executeQuery(queries.selectUserByRole, [role]);           
         return result;
     } catch (error) {
         throw error;

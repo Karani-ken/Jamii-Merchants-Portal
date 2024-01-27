@@ -15,6 +15,7 @@ const createUserTableQuery = `CREATE TABLE users (
 const useDatabaseQuery = `USE ${dbConfig.database}`;
 const insertUsersQuery = 'INSERT INTO users (name, email,password,phone) VALUES (?, ?, ?, ?)';
 const selectUserByEmail = 'SELECT * FROM users WHERE email = ?'
+const selectUserByRole = 'SELECT * FROM users WHERE role = ? '
 module.exports = {
     createDatabase,
     showDatabases,
@@ -22,6 +23,7 @@ module.exports = {
     createUserTableQuery,
     useDatabaseQuery,
     insertUsersQuery,
-    selectUserByEmail
+    selectUserByEmail,
+    selectUserByRole
 
 }
