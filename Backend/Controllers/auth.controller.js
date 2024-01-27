@@ -23,8 +23,7 @@ const register = async (req, res) =>{
 const login = async(req,res) =>{
     try {
         const {email, password} = req.body;
-        const user = await dbHandler.selectUserByEmail(email);  
-        console.log(user);    
+        const user = await dbHandler.selectUserByEmail(email);             
         if(!user){
             return res.status(401).json({error: "invalid credentials"});
         }
@@ -32,7 +31,13 @@ const login = async(req,res) =>{
         if(!passwordmatch){
             return res.status(401).json({error: "invalid credentials"});
         }
-        const token = jwt.sign({userId: user.ID}, process.env.JWT_SECRET,{
+        const token = jwt.sign({
+            userId: user[0].ID,
+            role:user[0].role,
+            name: user[0].name,
+            email: user[0].email
+        },
+             process.env.JWT_SECRET,{
             expiresIn: "1h",
         })
         res.status(200).json({token});
