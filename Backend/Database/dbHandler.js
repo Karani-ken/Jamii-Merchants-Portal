@@ -55,6 +55,14 @@ const insertUser = async (userData) =>{
         throw error;
     }
 }
+const selectUserByEmail = async (email) =>{
+    try {
+       const result = await executeQuery(queries.selectUserByEmail, [email]);           
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
 
 const initializeDatabase = async ()=>{
     try {
@@ -70,5 +78,6 @@ const initializeDatabase = async ()=>{
 module.exports ={
     pool,
     initializeDatabase,
-    insertUser
+    insertUser,
+    selectUserByEmail
 }
