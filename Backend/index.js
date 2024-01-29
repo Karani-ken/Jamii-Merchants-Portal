@@ -3,6 +3,7 @@ const express = require('express')
 const dbHandler = require('./Database/dbHandler')
 const bodyParser = require('body-parser');
 const authRoutes = require('./Routes/auth.routes')
+const customerRoutes = require('./Routes/customer.routes')
 const app = express();
 const port = process.env.PORT;
 app.use(bodyParser.json())
@@ -20,6 +21,8 @@ dbHandler.pool.getConnection((err, connection)=>{
     })
 })
 app.use('/auth', authRoutes);
+app.use('/customer', customerRoutes);
+
 
 app.listen(port,()=>{
     console.log(`App started on http://localhost:${port}`);

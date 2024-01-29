@@ -117,5 +117,6 @@ module.exports ={
     pool,
     initializeDatabase,
     insertUser,
-    selectUserByEmail
+    selectUserByEmail,
+    insertCustomerDetails
 }   
