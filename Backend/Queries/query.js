@@ -29,7 +29,7 @@ const createCustomerDetailsTable = `CREATE TABLE customerdetails (
 const createSerialsTable = ` CREATE TABLE serials(
     serial_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id BINARY(16),
-    serial_no VARCHAR(50)
+    serial_no VARCHAR(50),
 
     FOREIGN KEY (user_id) REFERENCES users(ID)
 )
@@ -44,7 +44,7 @@ module.exports = {
     showDatabases,
     showUsersTableQuery,
     createUserTableQuery,
-    useDatabaseQuery,
+    useDatabaseQuery,  
     insertUsersQuery,
     selectUserByEmail,
     selectUserByRole,
@@ -54,5 +54,6 @@ module.exports = {
     deleteCustomerDetails,
     createSerialsTable,
     selectAllUsers,
-    insertSerials
+    insertSerials,
+    showSerialsTableQuery
 }

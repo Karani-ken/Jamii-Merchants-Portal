@@ -34,7 +34,7 @@ const createTableIfNotExists = async ()=>{
     try {
         const result = await executeQuery(queries.showUsersTableQuery)    
         const result2 = await executeQuery(queries.showCustomerDetailsTable)  
-        const result3 = await executeQuery(queries.createSerialsTable);    
+        const result3 = await executeQuery(queries.showSerialsTableQuery);    
         const userTableExists = result.length > 0;
         const customerTableExists = result2.length > 0;
         const serialsTableExists = result3.length > 0;
@@ -46,7 +46,7 @@ const createTableIfNotExists = async ()=>{
             console.log(' customer table was created successfully')
         }else if(!serialsTableExists){
             await executeQuery(queries.createSerialsTable);
-            console.log("serials Table was created")
+            console.log("serials Table was created")     
         }
         else{
         console.log('tables already exists')
