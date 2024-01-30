@@ -33,15 +33,20 @@ const createDatabaseIfNotExists = async () =>{
 const createTableIfNotExists = async ()=>{
     try {
         const result = await executeQuery(queries.showUsersTableQuery)    
-        const result2 = await executeQuery(queries.showCustomerDetailsTable)      
+        const result2 = await executeQuery(queries.showCustomerDetailsTable)  
+        const result3 = await executeQuery(queries.createSerialsTable);    
         const userTableExists = result.length > 0;
         const customerTableExists = result2.length > 0;
+        const serialsTableExists = result3.length > 0;
         if(!userTableExists){
             await executeQuery(queries.createUserTableQuery);
             console.log(' user table was created successfully')
         }else if(!customerTableExists){
             await executeQuery(queries.createCustomerDetailsTable);
             console.log(' customer table was created successfully')
+        }else if(!serialsTableExists){
+            await executeQuery(queries.createSerialsTable);
+            console.log("serials Table was created")
         }
         else{
         console.log('tables already exists')
@@ -50,20 +55,6 @@ const createTableIfNotExists = async ()=>{
         throw error;
     }
 }
-/*const createCustomerDetailsTableIfNotExists = async ()=>{
-    try {
-        const result = await executeQuery(queries.showCustomerDetailsTable)       
-        const tableExists = result.length > 0;
-        if(!tableExists){
-            await executeQuery(queries.createCustomerDetailsTable);
-            console.log(' customer table was created successfully')
-        }else{
-        console.log('customer table already exists')
-        }    
-    } catch (error) {
-        throw error;
-    }
-}*/
 
 const insertUser = async (userData) =>{
     const {name, email, password, phone} = userData;
@@ -99,7 +90,35 @@ const insertCustomerDetails = async (userData) =>{
         throw error;
     }
 }
-
+const deleteCustomerDetails = async (email) =>{
+    try {
+        await executeQuery(queries.deleteCustomerDetails, [email]);
+        console.log('customer was deleted successfully')
+    } catch (error) {
+        throw error
+    }
+}
+const selectUsers = async () =>{
+    try {
+        const result = await executeQuery(queries.selectAllUsers);
+        if(result.length > 0){
+            return result;
+        }else{
+            console.log('no users in the table')
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+const addSerial = async (serialData) =>{
+    try {
+        const {user_id, serial_no} = serialData;
+        await executeQuery(queries.insertSerials, [user_id, serial_no])
+        console.log("User added successfully");
+    } catch (error) {
+        throw error;
+    }
+}
 
 const initializeDatabase = async ()=>{
     try {
@@ -118,5 +137,9 @@ module.exports ={
     initializeDatabase,
     insertUser,
     selectUserByEmail,
-    insertCustomerDetails
+    insertCustomerDetails,
+    addSerial,
+    selectUsers,
+    deleteCustomerDetails,
+    selectUserByRole
 }   

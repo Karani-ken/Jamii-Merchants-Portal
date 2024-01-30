@@ -19,7 +19,17 @@ const addCustomerDetails = async (req, res) =>{
    } 
 
 }
+const deleteCustomer = async (req, res) =>{
+    try {
+        const {email} = req.body;
+        await dbHandler.deleteCustomerDetails(email);
+        res.status(200).json({message: "customer details were deleted"});
+    } catch (error) {
+        throw error;
+    }
+}
 
 module.exports = {
-    addCustomerDetails
+    addCustomerDetails,
+    deleteCustomer
 }
