@@ -45,8 +45,19 @@ const login = async(req,res) =>{
         throw error;
     }
 }
+const selectUsers = async (req, res) =>{
+    try {
+        const result = await dbHandler.selectUsers();
+        if(result.length > 0){
+            return result;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
 
 module.exports ={
     register,
-    login
+    login,
+    selectUsers
 }
