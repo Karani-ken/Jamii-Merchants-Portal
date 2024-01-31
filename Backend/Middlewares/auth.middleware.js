@@ -8,10 +8,11 @@ function authenticateJWT(req,res, next){
     }
     jwt.verify(token, process.env.JWT_SECRET, (err, user) =>{
         if(err){
+            console.log(err)
             return res.status(403).json({error: "Forbidden"});
         }
 
-        req.user = user;
+        req.user = user;  
         next();
     })
 }
