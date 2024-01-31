@@ -57,9 +57,9 @@ const createTableIfNotExists = async ()=>{
 }
 
 const insertUser = async (userData) =>{
-    const {name, email, password, phone} = userData;
+    const {name, email, password, phone,role} = userData;
     try {
-        await executeQuery(queries.insertUsersQuery, [name, email,password,phone]);
+        await executeQuery(queries.insertUsersQuery, [name, email,password,phone,role]);
         console.log('user added successfully')
     } catch (error) {
         throw error;
@@ -82,9 +82,9 @@ const selectUserByRole = async (role) =>{
     }
 }
 const insertCustomerDetails = async (userData) =>{
-    const {name, idPhoto, email, phone, paymentCode} = userData;
+    const {name, id_photo, email, phone, paymentCode} = userData;
     try {        
-        await executeQuery(queries.insertCustomerDetails, [name, idPhoto, email,phone, paymentCode]);
+        await executeQuery(queries.insertCustomerDetails, [name, id_photo, email,phone, paymentCode]);
         console.log('user added successfully')  
     } catch (error) {
         throw error;

@@ -1,30 +1,35 @@
 const bcrypt = require('bcrypt')
 const dbHandler = require('../Database/dbHandler')
 const jwt = require("jsonwebtoken")
-const register = async (req, res) => {
+const register = async (req, res,next) => {
     try {
-        const { name, email, password, phone } = req.body;
+        const { name, email, password, phone,role } = req.body;
         if (!name || !email || !password || !phone) {
             res.status(400).json({ error: "All fields are required" });
         }
-        
+        const user = await dbHandler.selectUserByEmail(email);
+        if(user.length > 0){
+            res.status(400).json({message: " email already exists"});
+        }
         //hash the password before saving it
         const hashedPassword = await bcrypt.hash(password, 10);
         const userData = {
             name,
             email,
             password: hashedPassword,
-            phone
+            phone,
+            role,
         }
         await dbHandler.insertUser(userData);
         res.status(201).json({ message: "User was added successfully" });
 
     } catch (error) {
         throw error;
+        next();
     }
 }
 
-const login = async (req, res) => {
+const login = async (req, res,next) => {
     try {
         const { email, password } = req.body;
         const user = await dbHandler.selectUserByEmail(email);
@@ -46,7 +51,7 @@ const login = async (req, res) => {
         })
         res.status(200).json({ token });
     } catch (error) {
-        throw error;
+       throw error;
     }
 }
 const selectUsers = async (req, res) => {
@@ -55,10 +60,11 @@ const selectUsers = async (req, res) => {
         if (result.length > 0) {
             res.status(200).json({ result });
         } else {
-            res.status(200).json({ message: "no users found" })
+            res.status(200).json({ message: "no users found" })  
         }
     } catch (error) {
         throw error;
+        next();
     }
 }
 

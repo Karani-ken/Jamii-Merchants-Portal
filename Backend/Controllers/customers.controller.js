@@ -1,22 +1,22 @@
 const dbHandler = require('../Database/dbHandler')
 const addCustomerDetails = async (req, res) =>{
    try {
-    const {name, idPhoto, email, phone, paymentCode} = req.body;
-    if(!name || !idPhoto || !email || !phone || paymentCode){
+    const {name, id_photo, email, phone, paymentCode} = req.body;
+    if(!name || !id_photo || !email || !phone || !paymentCode){
         res.status(400).json({message: "all fields are required"})
     }
     const customerData = {
         name,
-        idPhoto,
+        id_photo,
         email,
         phone,
         paymentCode
     }
     await dbHandler.insertCustomerDetails(customerData);
-    res.status(201).json({message: " user was added successfully"});
+    res.status(201).json({message: " customer was added successfully"});
    } catch (error) {
         throw error;
-   } 
+   }     
 
 }
 const deleteCustomer = async (req, res) =>{

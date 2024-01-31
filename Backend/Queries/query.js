@@ -12,7 +12,7 @@ const createUserTableQuery = `CREATE TABLE users (
 )
 `  
 const useDatabaseQuery = `USE ${dbConfig.database}`;
-const insertUsersQuery = 'INSERT INTO users (name, email,password,phone) VALUES (?, ?, ?, ?)';
+const insertUsersQuery = 'INSERT INTO users (name, email,password,phone,role) VALUES (?, ?, ?, ?,?)';
 const selectUserByEmail = 'SELECT * FROM users WHERE email = ?'
 const selectUserByRole = 'SELECT * FROM users WHERE role = ? '
 const selectAllUsers = 'SELECT * FROM users'
@@ -28,10 +28,10 @@ const createCustomerDetailsTable = `CREATE TABLE customerdetails (
 const createSerialsTable = ` CREATE TABLE serials(
     serial_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    serial_no VARCHAR(50),
+    serial_no DECIMAL(24,0),
 
-    FOREIGN KEY (user_id) REFERENCES users(ID)
-)  
+    FOREIGN KEY (user_id) REFERENCES users(ID)    
+)     
 `
 const insertSerials = 'INSERT INTO serials (user_id, serial_no) VALUES (?, ?)'
 const insertCustomerDetails =  `INSERT INTO customerDetails (name,id_photo, email, phone, payment_code)
@@ -39,7 +39,7 @@ const insertCustomerDetails =  `INSERT INTO customerDetails (name,id_photo, emai
  const deleteCustomerDetails = `DELETE FROM customerDetails WHERE email = ?`
  const showSerialsTableQuery = 'SHOW TABLES LIKE "serials"'
 module.exports = {
-    createDatabase,
+    createDatabase,        
     showDatabases,
     showUsersTableQuery,
     createUserTableQuery,
