@@ -1,20 +1,50 @@
-import React from 'react'
-
+import React, { useState } from 'react'
 const Login = () => {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    })
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }))
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("login succesfull:", formData)
+    }
     return (
         <div className='text-center p-5 input-form'>
             <h3>Sign in</h3>
-            <form>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label htmlFor='email' className="form-label">Email address</label>
+                    <input
+                        type="email"
+                        name='email'
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="form-control"
+                        aria-describedby="emailHelp"
+                        required
+                    />
 
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" />
+                <div className="mb-3">
+                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                    <input
+                        type="password"
+                        name='password'
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="form-control"
+                        required
+                    />
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>
     )

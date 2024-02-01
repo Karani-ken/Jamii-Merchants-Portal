@@ -1,5 +1,5 @@
-import React from 'react'
-import { useState } from 'react'
+import React,{useState} from 'react'
+import { Link } from 'react-router-dom';
 export const Register = () => {
     const [formData, setFormData] = useState(
         {
@@ -50,7 +50,7 @@ export const Register = () => {
 
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="Email1" className="form-label">Email address</label>
+                    <label htmlFor="Email" className="form-label">Email address</label>
                     <input
                         type="email"
                         name='email'
@@ -63,7 +63,7 @@ export const Register = () => {
 
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="Password1" className="form-label">Password</label>
+                    <label htmlFor="Password" className="form-label">Password</label>
                     <input
                         type="password"
                         name='password'
@@ -84,6 +84,7 @@ export const Register = () => {
                         required
                     />
                 </div>
+                <Link to='/login' className='btn'>Already have an account? Login here</Link>
                 <button type="submit" className="btn btn-primary">Register</button>
             </form>
         </div>
