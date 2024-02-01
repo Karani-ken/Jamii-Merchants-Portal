@@ -1,34 +1,90 @@
 import React from 'react'
-
+import { useState } from 'react'
 export const Register = () => {
+    const [formData, setFormData] = useState(
+        {
+            name: '',
+            phone: '',
+            email: '',
+            password: '',
+            confirmpwd: ''
+        }
+    )
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("form submitted:", formData)
+    }
     return (
         <div className='text-center p-5 input-form'>
             <h3>Create Account</h3>
-            <form>
-            <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Name</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                   
+            <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input
+                        type="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        name='name'
+                        className="form-control"                        
+                        required
+                    />
+
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Phone</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                   
+                <div className="mb-3">
+                    <label htmlFor="phone" className="form-label">Phone</label>
+                    <input
+                        type="phone"
+                        name='phone'
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="form-control"                       
+                        required
+                    />
+
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                   
+                <div className="mb-3">
+                    <label htmlFor="Email1" className="form-label">Email address</label>
+                    <input
+                        type="email"
+                        name='email'
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="form-control"                      
+                        aria-describedby="emailHelp"
+                        required
+                    />
+
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" />
-                </div>   
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label"> Confirm Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" />
-                </div>               
-                <button type="submit" class="btn btn-primary">Register</button>
+                <div className="mb-3">
+                    <label htmlFor="Password1" className="form-label">Password</label>
+                    <input
+                        type="password"
+                        name='password'
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="form-control"                       
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Password2" className="form-label"> Confirm Password</label>
+                    <input
+                        type="password"
+                        name='confirmpwd'
+                        value={formData.confirmpwd}
+                        onChange={handleInputChange}
+                        className="form-control"                       
+                        required
+                    />
+                </div>
+                <button type="submit" className="btn btn-primary">Register</button>
             </form>
         </div>
     )
