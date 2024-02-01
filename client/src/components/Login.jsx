@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -44,6 +45,7 @@ const Login = () => {
                         required
                     />
                 </div>
+                <Link to='/register' className='btn'>Not yet registered? create account here</Link>
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>
