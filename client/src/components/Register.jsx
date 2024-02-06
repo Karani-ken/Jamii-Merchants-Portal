@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 export const Register = () => {
     const [formData, setFormData] = useState(
         {
@@ -17,9 +18,14 @@ export const Register = () => {
             [name]: value,
         }));
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("form submitted:", formData)
+        try {
+            const response = await axios.post('/auth/register', formData)
+            console.log("register successfull", response.data);
+        } catch (error) {
+            console.log('register failed', error)
+        }
     }
     return (
         <div className='text-center p-5 input-form'>

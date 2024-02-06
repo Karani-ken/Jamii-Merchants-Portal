@@ -1,6 +1,29 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState,useEffect} from 'react'
+import {jwtDecode} from 'jwt-decode'
+import { Link, useNavigate} from 'react-router-dom'
 const Sidebar = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const token = localStorage.getItem('token')
+    const navigate = useNavigate()
+    useEffect(() => {   
+    if (token) {
+      try {
+        const decodeToken = jwtDecode(token)       
+        setIsAuthenticated(true)
+      } catch (error) {
+        console.log('Error decoding token', error);
+        setIsAuthenticated(false);
+      }
+    }else {
+        setIsAuthenticated(false)
+    }
+  },[isAuthenticated, token]);
+
+  const hanldeLogOut = () =>{
+    localStorage.removeItem('token');
+    navigate('/login')
+    window.location.reload()
+  }
     return (
         <div>
             <input type="checkbox" id='check' />
@@ -16,7 +39,14 @@ const Sidebar = () => {
                     <ul>
                         <li><Link to='/' >Dashboard</Link></li>
                         <li> Reports</li>
-                        <Link to='/register' className='btn custom-btn'>Log in</Link>
+                        {
+                            isAuthenticated ? (
+                                <button className='btn custom-btn' onClick={hanldeLogOut}>Log out</button>
+                            ):(
+                                <Link to='/login' className='btn custom-btn'>Log in</Link>
+                            )
+                        }
+                       
                     </ul>
 
                 </div>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
+import axios from 'axios'
 const Login = () => {
+    const navigate = useNavigate();   
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -13,9 +15,23 @@ const Login = () => {
             [name]: value,
         }))
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("login succesfull:", formData)
+        try {
+            const response = await axios.post('/auth/login', formData)
+            const token = response.data.token;
+            //store the token in local storage
+            localStorage.setItem('token', token)
+            navigate('/')
+            window.location.reload()
+            console.log("login successfull", response.data);
+        } catch (error) {
+            console.log('login failed', error)
+        }
+
+  
+       
+       
     }
     return (
         <div className='text-center p-5 input-form'>
