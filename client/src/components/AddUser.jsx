@@ -76,7 +76,7 @@ function AddUser() {
                 <button type="submit"  class="btn btn-primary">submit</button>
             </form>
             <form className='shadow-lg p-3 m-3'>
-                <h3>Verification Documents</h3>
+                <p className='fw-bolder'>Verification Documents</p>
                 <p>upload ID card photos</p>
                 <div className="mb-3">
                     <label htmlFor="id-front" className="form-label">Front side</label>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 export const Register = () => {
@@ -28,9 +28,10 @@ export const Register = () => {
         }
     }
     return (
-        <div className='text-center p-5 input-form'>
-            <h3>Create Account</h3>
-            <form onSubmit={handleSubmit}>
+        <div className='text-center p-5 input-form  d-lg-flex justify-content-center'>
+
+            <form onSubmit={handleSubmit} className='shadow-lg p-3'>
+                <h3>Create Account</h3>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
                     <input
@@ -38,7 +39,7 @@ export const Register = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         name='name'
-                        className="form-control"                        
+                        className="form-control"
                         required
                     />
 
@@ -50,7 +51,7 @@ export const Register = () => {
                         name='phone'
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="form-control"                       
+                        className="form-control"
                         required
                     />
 
@@ -62,7 +63,7 @@ export const Register = () => {
                         name='email'
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="form-control"                      
+                        className="form-control"
                         aria-describedby="emailHelp"
                         required
                     />
@@ -75,7 +76,7 @@ export const Register = () => {
                         name='password'
                         value={formData.password}
                         onChange={handleInputChange}
-                        className="form-control"                       
+                        className="form-control"
                         required
                     />
                 </div>
@@ -86,7 +87,7 @@ export const Register = () => {
                         name='confirmpwd'
                         value={formData.confirmpwd}
                         onChange={handleInputChange}
-                        className="form-control"                       
+                        className="form-control"
                         required
                     />
                 </div>

@@ -34,9 +34,10 @@ const Login = () => {
        
     }
     return (
-        <div className='text-center p-5 input-form'>
+        <div className='text-center d-lg-flex justify-content-center  p-5 input-form'>
+            
+            <form onSubmit={handleSubmit} className='shadow-lg p-3'>
             <h3>Sign in</h3>
-            <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor='email' className="form-label">Email address</label>
                     <input

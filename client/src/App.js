@@ -13,7 +13,7 @@ function App() {
   const [userRole, setUserRole] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  useEffect(() => {
+ /* useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
       try {
@@ -25,15 +25,14 @@ function App() {
         console.log('Error decoding token', error);
       }
     }
-  }, [userRole, isAuthenticated]);
+  }, [userRole, isAuthenticated]);*/
   return (
     <div className="App">
       <Router>
         <Sidebar />
         <Routes>
           <Route path='/' element={<AdminDasboard />} />
-          <Route path='/agent' element={<AgentDashboard />} />
-          <Route path='/assign-serial' element={<AddSerial />} />
+          <Route path='/agent' element={<AgentDashboard />} />        
           <Route path='/add-user' element={<AddUser />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />

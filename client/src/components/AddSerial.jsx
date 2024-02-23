@@ -1,18 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Modal, Button } from 'react-bootstrap'
 
-const AddSerial = () => {
+const AddSerial = ({ showModal, onClose }) => {
+  const [serialNumber, setSerialNumber] = useState('');
+
+  const handleInputChange = (e) => {
+    setSerialNumber(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Serial number submitted:', serialNumber);
+
+    onClose();
+  }
   return (
-    <div className='text-center p-5 input-form'>
-            <h3>Assign Serial</h3>
-            <form>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Enter Serial</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-
-                </div>               
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
+    <Modal show={showModal} onHide={onClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Assign Serial</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="serialNumber">Serial Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="serialNumber"
+              value={serialNumber}
+              onChange={handleInputChange}
+            />
+          </div>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </form>
+      </Modal.Body>
+    </Modal>
   )
 }
 
