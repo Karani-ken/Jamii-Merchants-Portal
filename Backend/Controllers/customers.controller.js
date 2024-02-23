@@ -1,6 +1,5 @@
 const dbHandler = require('../Database/dbHandler')
 require('dotenv').config();
-const multer = require('multer')
 const nodemailer = require('nodemailer')
 const fs = require('fs')
 
