@@ -82,9 +82,9 @@ const selectUserByRole = async (role) =>{
     }
 }
 const insertCustomerDetails = async (userData) =>{
-    const {name, id_photo, email, phone, paymentCode} = userData;
+    const {name, email, phone, payment_code} = userData;
     try {        
-        await executeQuery(queries.insertCustomerDetails, [name, id_photo, email,phone, paymentCode]);
+        await executeQuery(queries.insertCustomerDetails, [name,email,phone, payment_code]);
         console.log('user added successfully')  
     } catch (error) {
         throw error;

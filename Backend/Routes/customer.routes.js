@@ -6,7 +6,7 @@ const multer = require('multer')
 // Multer configuration for handling file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '../uploads/');
+      cb(null, 'D:/Jamii Merchants Portal/Backend/uploads');
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname);

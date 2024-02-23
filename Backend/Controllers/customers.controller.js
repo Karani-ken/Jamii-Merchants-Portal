@@ -13,18 +13,18 @@ const fs = require('fs')
 
 const addCustomerDetails = async (req, res) =>{
    try {
-    const {name,email, phone, paymentCode} = req.body;
+    const {name,email, phone,payment_code} = req.body;
     const id_photo_front = req.files['id_photo_front'][0];
     const id_photo_back = req.files['id_photo_back'][0];
 
-    if(!name|| !email || !phone || !paymentCode){
+    if(!name|| !email || !phone || !payment_code){
         res.status(400).json({message: "all fields are required"})
     }
-    const customerData = {
+    const customerData = {    
         name,        
         email,
         phone,
-        paymentCode
+        payment_code
     }
     await dbHandler.insertCustomerDetails(customerData);
     res.status(201).json({message: " customer was added successfully"});
@@ -38,7 +38,7 @@ const addCustomerDetails = async (req, res) =>{
                 <li>Name: ${name} </li>
                 <li>email: ${email} </li>
                 <li>phone: ${phone} </li>
-                <li>payment code: ${paymentCode} </li>
+                <li>payment code: ${payment_code} </li>
             </ul>            
           <p>Please find the attached ID card photos for verification.</p>
         `,

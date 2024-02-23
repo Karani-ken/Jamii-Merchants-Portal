@@ -5,7 +5,9 @@ function AddUser() {
         name: '',
         phone: '',
         email: '',
-        mpesaCode: ''
+        payment_code: '',
+        id_photo_front: null,
+        id_photo_back: null
 
     });
     const [imagePreviewFront, setImagePreviewFront] = useState(null);
@@ -29,10 +31,12 @@ function AddUser() {
             formData.append('name', userData.name);
             formData.append('phone', userData.phone);
             formData.append('email', userData.email);
-            formData.append('mpesaCode', userData.mpesaCode);
+            formData.append('payment_code', userData.payment_code);
+            formData.append('id_photo_front', userData.id_photo_front);
+            formData.append('id_photo_back', userData.id_photo_back)
             const res = await axios.post('/customer/addcustomer', formData, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data'
                 }
             })
             console.log('User added successfully:', res.data);
@@ -41,8 +45,12 @@ function AddUser() {
                 name: '',
                 phone: '',
                 email: '',
-                mpesaCode: ''
+                payment_code: '',
+                id_photo_front: null,
+                id_photo_back: null
             });
+            setImagePreviewFront(null);
+            setImagePreviewBack(null);
             setIsLoading(false)
         } catch (error) {
             console.log(error);
@@ -50,51 +58,52 @@ function AddUser() {
         }
     }
     return (
-        <div className='d-lg-flex justify-content-center text-center p-5 input-form'>
-            <form onSubmit={handleFormSubmit} className='shadow-lg p-3 m-3 w-100'>
-                <h3>Personal details</h3>
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" onChange={handleInputChange}
-                        name='name' />
+        <form onSubmit={handleFormSubmit} className='mx-5 px-5'>
+            <div className='d-lg-flex justify-content-center text-center p-5 input-form' >
+                <div className='shadow-lg p-3 m-3 w-100'>
+                    <h3>Personal details</h3>
+                    <div className="mb-3">
+                        <label htmlFor="name" className="form-label">Name</label>
+                        <input type="text" className="form-control" onChange={handleInputChange}
+                            name='name' />
+
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Phone</label>
+                        <input type="number" className="form-control"
+                            onChange={handleInputChange} name='phone' />
+
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
+                        <input type="email" onChange={handleInputChange} className="form-control" name='email' />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="mpesacode" className="form-label"> M-pesa Code</label>
+                        <input type="text" onChange={handleInputChange} className="form-control" name='payment_code' />
+                    </div>
+                </div>
+                <div className='shadow-lg p-3 m-3'>
+                    <p className='fw-bolder'>Verification Documents</p>
+                    <p>upload ID card photos</p>
+                    <div className="mb-3">
+                        <label htmlFor="id-front" className="form-label">Front side</label>
+                        <input type="file" accept="image/png, image/jpeg, image/jpg"
+                            onChange={(e) => handleFileInputChange(e, 'id_photo_front')} className="form-control" id="id-front" />
+                        {imagePreviewFront && <img src={imagePreviewFront} alt="id front" style={{ height: '150px', width: '300px' }} />}
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="id-back" className="form-label">Back side</label>
+                        <input type="file" accept="image/png, image/jpeg, image/jpg"
+                            onChange={(e) => handleFileInputChange(e, 'id_photo_back')} className="form-control" id="id-back" />
+                        {imagePreviewBack && <img src={imagePreviewBack} alt="id back" style={{ height: '150px', width: '300px' }} />}
+                    </div>
 
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Phone</label>
-                    <input type="number" class="form-control"
-                        onChange={handleInputChange} name='phone' />
+            </div>
+            <button type='submit' className='btn btn-primary'>submit</button>
 
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email</label>
-                    <input type="email" onChange={handleInputChange} class="form-control" name='email' />
-                </div>
-                <div class="mb-3">
-                    <label for="mpesacode" class="form-label"> M-pesa Code</label>
-                    <input type="text" onChange={handleInputChange} class="form-control" name='mpesaCode' />
-                </div>
-                <button type="submit"  class="btn btn-primary">submit</button>
-            </form>
-            <form className='shadow-lg p-3 m-3'>
-                <p className='fw-bolder'>Verification Documents</p>
-                <p>upload ID card photos</p>
-                <div className="mb-3">
-                    <label htmlFor="id-front" className="form-label">Front side</label>
-                    <input type="file" accept="image/png, image/jpeg, image/jpg"
-                        onChange={(e) => handleFileInputChange(e, 'id_photo_front')} className="form-control" id="id-front" />
-                    {imagePreviewFront && <img src={imagePreviewFront} alt="id front" style={{ height: '150px', width: '300px' }} />}
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="id-back" className="form-label">Back side</label>
-                    <input type="file" accept="image/png, image/jpeg, image/jpg"
-                        onChange={(e) => handleFileInputChange(e, 'id_photo_back')} className="form-control" id="id-back" />
-                    {imagePreviewBack && <img src={imagePreviewBack} alt="id back" style={{ height: '150px', width: '300px' }} />}
-                </div>  
-                <button type='submit' className='btn btn-primary'>submit</button>            
-
-            </form>
-
-        </div>
+        </form>
     )
 }
 

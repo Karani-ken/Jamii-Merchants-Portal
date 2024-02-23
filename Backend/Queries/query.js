@@ -33,8 +33,8 @@ const createSerialsTable = ` CREATE TABLE serials(
 )     
 `
 const insertSerials = 'INSERT INTO serials (user_id, serial_no) VALUES (?, ?)'
-const insertCustomerDetails =  `INSERT INTO customerDetails (name,id_photo, email, phone, payment_code)
- VALUES (?, ?, ?, ?, ?)`;
+const insertCustomerDetails =  `INSERT INTO customerDetails (name,email, phone, payment_code)
+ VALUES (?, ?, ?, ?)`;
  const deleteCustomerDetails = `DELETE FROM customerDetails WHERE email = ?`
  const showSerialsTableQuery = 'SHOW TABLES LIKE "serials"'
 module.exports = {
