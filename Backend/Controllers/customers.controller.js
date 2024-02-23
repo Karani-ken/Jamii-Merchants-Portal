@@ -78,8 +78,31 @@ const deleteCustomer = async (req, res) =>{
         throw error;
     }
 }
+const filterCustomers = async (req, res) =>{
+  try {
+    const {startDate, endDate} = req.body;
+    const filterDates = {
+      startDate,
+      endDate
+    }
+    const results = await dbHandler.filterCustomersByDate(filterDates);
+    res.status(200).json(results);
+  } catch (error) {
+    throw error;
+  }
+}
+const getAllCustomers = async (req, res) =>{
+  try {
+    const results = await dbHandler.allCustomers();
+    res.status(200).json(results)
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
     addCustomerDetails,
-    deleteCustomer
+    deleteCustomer,
+    filterCustomers,
+    getAllCustomers
 }

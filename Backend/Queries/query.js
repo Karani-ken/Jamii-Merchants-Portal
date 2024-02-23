@@ -8,11 +8,12 @@ const createUserTableQuery = `CREATE TABLE users (
     email VARCHAR(255) UNIQUE NOT NULL,
     phone INT,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(255)      
+    role VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    
 )
 `  
 const useDatabaseQuery = `USE ${dbConfig.database}`;
-const insertUsersQuery = 'INSERT INTO users (name, email,password,phone,role) VALUES (?, ?, ?, ?,?)';
+const insertUsersQuery = 'INSERT INTO users (name, email,password,phone,role,created_at) VALUES (?, ?, ?, ?,?,NOW())';
 const selectUserByEmail = 'SELECT * FROM users WHERE email = ?'
 const selectUserByRole = 'SELECT * FROM users WHERE role = ? '
 const selectAllUsers = 'SELECT * FROM users'
@@ -22,19 +23,22 @@ const createCustomerDetailsTable = `CREATE TABLE customerdetails (
     name VARCHAR(255) NOT NULL,    
     email VARCHAR(255) UNIQUE NOT NULL,
     phone INT,
-    payment_code VARCHAR(255) NOT NULL  
+    payment_code VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
     )`   
 const createSerialsTable = ` CREATE TABLE serials(
     serial_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     serial_no DECIMAL(24,0),
-
-    FOREIGN KEY (user_id) REFERENCES users(ID)    
+    FOREIGN KEY (user_id) REFERENCES users(ID) ,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
 )     
 `
-const insertSerials = 'INSERT INTO serials (user_id, serial_no) VALUES (?, ?)'
-const insertCustomerDetails =  `INSERT INTO customerDetails (name,email, phone, payment_code)
- VALUES (?, ?, ?, ?)`;
+const insertSerials = 'INSERT INTO serials (user_id, serial_no created_at) VALUES (?, ?, NOW())'
+const insertCustomerDetails = `INSERT INTO customerDetails (name, email, phone, payment_code, created_at)
+VALUES (?, ?, ?, ?, NOW())`;
+const AllCustomers = `SELECT * FROM customerDetails`;
+const filterCustomers = `SELECT * FROM customerdetails WHERE created_at BETWEEN ? AND ?`;
  const deleteCustomerDetails = `DELETE FROM customerDetails WHERE email = ?`
  const showSerialsTableQuery = 'SHOW TABLES LIKE "serials"'
 module.exports = {
@@ -43,7 +47,7 @@ module.exports = {
     showUsersTableQuery,
     createUserTableQuery,
     useDatabaseQuery,  
-    insertUsersQuery,   
+    insertUsersQuery,      
     selectUserByEmail,
     selectUserByRole,
     createCustomerDetailsTable,
@@ -53,5 +57,7 @@ module.exports = {
     createSerialsTable,
     selectAllUsers,
     insertSerials,
-    showSerialsTableQuery
+    showSerialsTableQuery,
+    filterCustomers,
+    AllCustomers
 }

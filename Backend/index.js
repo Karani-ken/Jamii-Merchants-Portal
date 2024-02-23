@@ -28,4 +28,4 @@ app.use('/serial', serialRoutes)
 
 app.listen(port,()=>{
     console.log(`App started on http://localhost:${port}`);
-})
+})      

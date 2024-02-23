@@ -16,7 +16,7 @@ function AdminDasboard() {
       <div className='text-center bg-dark mx-5 text-white'>
         <h1>Admin</h1>
         <div className="d-lg-flex justify-content-end bg-light">
-          <div className="shadow-lg text-dark p-3 rounded-lg m-3">
+          <div className="shadow-lg text-dark p-3 rounded-lg m-3" style={{backgroundColor:'blue'}}>
             <button className='btn btn-primary bg-dark'
               onClick={() => navigate('/register')}>Add agent</button>
           </div>
