@@ -19,8 +19,7 @@ const selectAllUsers = 'SELECT * FROM users'
 const showCustomerDetailsTable = 'SHOW TABLES LIKE "customerdetails"';
 const createCustomerDetailsTable = `CREATE TABLE customerdetails (
     ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    id_photo VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,    
     email VARCHAR(255) UNIQUE NOT NULL,
     phone INT,
     payment_code VARCHAR(255) NOT NULL  

@@ -1,19 +1,70 @@
 const dbHandler = require('../Database/dbHandler')
+require('dotenv').config();
+const multer = require('multer')
+const nodemailer = require('nodemailer')
+const fs = require('fs')
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER, 
+      pass: process.env.EMAIL_PASS 
+    }
+  });
+
 const addCustomerDetails = async (req, res) =>{
    try {
-    const {name, id_photo, email, phone, paymentCode} = req.body;
-    if(!name || !id_photo || !email || !phone || !paymentCode){
+    const {name,email, phone, paymentCode} = req.body;
+    const id_photo_front = req.files['id_photo_front'][0];
+    const id_photo_back = req.files['id_photo_back'][0];
+
+    if(!name|| !email || !phone || !paymentCode){
         res.status(400).json({message: "all fields are required"})
     }
     const customerData = {
-        name,
-        id_photo,
+        name,        
         email,
         phone,
         paymentCode
     }
     await dbHandler.insertCustomerDetails(customerData);
     res.status(201).json({message: " customer was added successfully"});
+    const mailOptions = {
+        from: process.env.EMAIL_USER, // Sender email address
+        to: process.env.EMAIL_RECIPIENT, // Receiver email address
+        subject: 'Verification Documents',
+        html: `
+            <h4>Client Details</h4>
+            <ul> 
+                <li>Name: ${name} </li>
+                <li>email: ${email} </li>
+                <li>phone: ${phone} </li>
+                <li>payment code: ${paymentCode} </li>
+            </ul>            
+          <p>Please find the attached ID card photos for verification.</p>
+        `,
+        attachments: [
+          {
+            filename: id_photo_front.originalname,
+            content: fs.createReadStream(id_photo_front.path)
+          },
+          {
+            filename: id_photo_back.originalname,
+            content: fs.createReadStream(id_photo_back.path)
+          }
+        ]
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log('Error sending email:', error);
+          res.status(500).send('Error sending email');
+        } else {
+          console.log('Email sent:', info.response);
+          res.status(200).send('Email sent successfully');
+        }
+      });
+   
    } catch (error) {
         throw error;
    }     
