@@ -25,26 +25,18 @@ function App() {
         console.log('Error decoding token', error);
       }
     }
-  },[userRole, isAuthenticated]);
+  }, [userRole, isAuthenticated]);
   return (
     <div className="App">
       <Router>
         <Sidebar />
         <Routes>
-          {isAuthenticated ? (
-            <>
-              {userRole === 'admin' && <Route path='/' element={<AdminDasboard />} />}
-              {userRole === 'agent' && <Route path='/' element={<AgentDashboard />} />}
-              <Route path='/assign-serial' element={<AddSerial />} />
-              <Route path='/add-user' element={<AddUser />} />
-            </>
-          ) : (
-            <>
-              <Route path='/register' element={<Register />} />
-              <Route path='/login' element={<Login />} />
-            </>
-          )}
-
+          <Route path='/' element={<AdminDasboard />} />
+          <Route path='/agent' element={<AgentDashboard />} />
+          <Route path='/assign-serial' element={<AddSerial />} />
+          <Route path='/add-user' element={<AddUser />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </Router>
 
