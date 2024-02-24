@@ -25,9 +25,7 @@ const addCustomerDetails = async (req, res) =>{
         email,
         phone,
         payment_code
-    }
-    await dbHandler.insertCustomerDetails(customerData);
-    res.status(201).json({message: " customer was added successfully"});
+    }   
     const mailOptions = {
         from: process.env.EMAIL_USER, // Sender email address
         to: process.env.EMAIL_RECIPIENT, // Receiver email address
@@ -63,9 +61,11 @@ const addCustomerDetails = async (req, res) =>{
           res.status(200).send('Email sent successfully');
         }
       });
+      await dbHandler.insertCustomerDetails(customerData);
+      res.status(201).json({message: " customer was added successfully"});
    
    } catch (error) {
-        throw error;
+        throw error;  
    }     
 
 }

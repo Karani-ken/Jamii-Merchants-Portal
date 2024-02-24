@@ -1,13 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AssignSerialModal from './AddSerial'
+import axios from 'axios'
 function AdminDasboard() {
   const navigate = useNavigate();
+  const [users, setUsers] = useState([])
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get('/auth/get-users')
+      if (response > 0) {
+        setUsers(response.data)
+        console.log(response.data)
+      }
+    }
+    fetchData();
+  })
   const handleButtonClick = () => {
     setShowModal(true)
   }
-
   const handleCloseModal = () => {
     setShowModal(false);
   }
@@ -16,7 +28,7 @@ function AdminDasboard() {
       <div className='text-center bg-dark mx-5 text-white'>
         <h1>Admin</h1>
         <div className="d-lg-flex justify-content-end bg-light">
-          <div className="shadow-lg text-dark p-3 rounded-lg m-3" style={{backgroundColor:'blue'}}>
+          <div className="shadow-lg text-dark p-3 rounded-lg m-3" style={{ backgroundColor: 'blue' }}>
             <button className='btn btn-primary bg-dark'
               onClick={() => navigate('/register')}>Add agent</button>
           </div>
@@ -45,45 +57,25 @@ function AdminDasboard() {
             </tr>
           </thead>
           <tbody className='table-group-divider'>
-            <tr>
-              <th scope='row'>1</th>
-              <td>John Doe</td>
-              <td>johndoe@exampe.com</td>
-              <td>0712345678</td>
-              <td>6</td>
-              <td>
-                <button onClick={handleButtonClick} className="btn btn-primary" style={{ background: '#048243', border: 'none' }}>
-                  Assign Serial
-                </button>
-                <AssignSerialModal showModal={showModal} onClose={handleCloseModal} />
-              </td>
-            </tr>
-            <tr>
-              <th scope='row'>2</th>
-              <td>John Doe</td>
-              <td>johndoe@exampe.com</td>
-              <td>0712345678</td>
-              <td>10</td>
-              <td>
-                <button onClick={handleButtonClick} className="btn btn-primary" style={{ background: '#048243', border: 'none' }}>
-                  Assign Serial
-                </button>
-                <AssignSerialModal showModal={showModal} onClose={handleCloseModal} />
-              </td>
-            </tr>
-            <tr>
-              <th scope='row'>3</th>
-              <td>John Doe</td>
-              <td>johndoe@exampe.com</td>
-              <td>0712345678</td>  
-              <td>15</td>
-              <td>
-                <button onClick={handleButtonClick} className="btn btn-primary" style={{ background: '#048243', border: 'none' }}>
-                  Assign Serial
-                </button>
-                <AssignSerialModal showModal={showModal} onClose={handleCloseModal} />
-              </td>
-            </tr>
+            {users && users.map((user) => {
+              return (
+                <tr key={user.ID}>
+                  <th scope='row'>{user.name}</th>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phone}</td>
+                  <td>6</td>
+                  <td>
+                    <button onClick={handleButtonClick} className="btn btn-primary" style={{ background: '#048243', border: 'none' }}>
+                      Assign Serial
+                    </button>
+                    <AssignSerialModal showModal={showModal} onClose={handleCloseModal} />
+                  </td>
+                </tr>
+              )
+            })}
+
+
           </tbody>
         </table>
       </div>

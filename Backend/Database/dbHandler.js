@@ -120,11 +120,7 @@ const allCustomers = async () => {
 const selectUsers = async () => {
     try {
         const result = await executeQuery(queries.selectAllUsers);
-        if (result.length > 0) {
-            return result;
-        } else {
-            console.log('no users in the table')
-        }
+       return result;
     } catch (error) {
         throw error;
     }

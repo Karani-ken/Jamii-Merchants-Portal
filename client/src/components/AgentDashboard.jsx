@@ -1,7 +1,24 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React,{useEffect, useState} from 'react'
+import {useNavigate } from 'react-router-dom'
+import axios from 'axios'
 function AgentDashboard() {
+  const [clients, setClients] = useState([]);
   const navigate = useNavigate()
+  useEffect( ()=>{
+   
+      async function fetchData(){
+        const response = await axios.get('/customer/customers')
+        if(response > 0){
+          setClients(response.data)
+          console.log(response.data)
+        }
+      }
+      fetchData()
+      
+      
+   
+  },[])
+
   return (
     <div className='admin-panel'>
       <div className='text-center bg-dark mx-5 text-white'>
@@ -34,12 +51,18 @@ function AgentDashboard() {
             </tr>
           </thead>
           <tbody  className='table-group-divider'>
-          <tr>              
-              <td>John Doe</td>
-              <td>johndoe@exampe.com</td>
-              <td>0712345678</td>
-              <td>RQ3HFDFJ</td>                       
-            </tr>
+            {clients && clients.map((client) =>{
+              return(
+                <tr key={client.ID}>              
+                 <td>{client.name}</td>
+                 <td>{client.email}</td>
+                 <td>{client.phone}</td>
+                 <td>{client.payment_code}</td>                       
+               </tr>
+              )
+                 
+            })}
+         
           </tbody>
         </table>
       </div>
