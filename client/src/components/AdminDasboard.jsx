@@ -10,17 +10,18 @@ function AdminDasboard() {
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get('/auth/get-users')
-      if (response > 0) {
+     
+      if (response.data.length > 0  ) {
         setUsers(response.data)
         console.log(response.data)
       }
     }
     fetchData();
-  })
+  },[])
   const handleButtonClick = () => {
     setShowModal(true)
   }
-  const handleCloseModal = () => {
+  const handleCloseModal = () => {  
     setShowModal(false);
   }
   return (
@@ -28,15 +29,15 @@ function AdminDasboard() {
       <div className='text-center bg-dark mx-5 text-white'>
         <h1>Admin</h1>
         <div className="d-lg-flex justify-content-end bg-light">
-          <div className="shadow-lg text-dark p-3 rounded-lg m-3" style={{ backgroundColor: 'blue' }}>
+          <div className="shadow-lg text-dark p-3 rounded m-3" style={{ backgroundColor: '#34a832' }}>
             <button className='btn btn-primary bg-dark'
               onClick={() => navigate('/register')}>Add agent</button>
           </div>
-          <div className="shadow-lg text-dark p-3 rounded-lg m-3">
+          <div className="shadow-lg text-dark p-3 rounded m-3" style={{ backgroundColor: '#27c1cc' }}>
             <h4>Total Agents</h4>
             <h6>10</h6>
           </div>
-          <div className="shadow-lg text-dark p-3 rounded-lg m-3">
+          <div className="shadow-lg text-dark p-3 rounded m-3" style={{ backgroundColor: '#de265d' }}>
             <h4>Allocated Serials</h4>
             <h6>10</h6>
           </div>
@@ -57,7 +58,7 @@ function AdminDasboard() {
             </tr>
           </thead>
           <tbody className='table-group-divider'>
-            {users && users.map((user) => {
+            {users && users?.map((user) => {
               return (
                 <tr key={user.ID}>
                   <th scope='row'>{user.name}</th>

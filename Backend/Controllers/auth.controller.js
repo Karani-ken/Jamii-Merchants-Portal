@@ -58,7 +58,7 @@ const selectUsers = async (req, res) => {
     try {
         const result = await dbHandler.selectUsers();
         if (result.length > 0) {
-            res.status(200).json({ result });
+            res.status(200).json( result );
         } else {
             res.status(200).json({ message: "no users found" })  
         }
