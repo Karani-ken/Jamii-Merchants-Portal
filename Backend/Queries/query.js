@@ -24,6 +24,7 @@ const createCustomerDetailsTable = `CREATE TABLE customerdetails (
     email VARCHAR(255) UNIQUE NOT NULL,
     phone INT,
     payment_code VARCHAR(255) NOT NULL,
+    user_id INT,
     FOREIGN KEY (user_id) REFERENCES users(ID) ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP   
     )`   

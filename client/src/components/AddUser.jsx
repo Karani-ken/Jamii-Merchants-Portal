@@ -58,9 +58,9 @@ function AddUser() {
         }
     }
     return (
-        <form onSubmit={handleFormSubmit} className='mx-5 px-5'>
-            <div className='d-lg-flex justify-content-center text-center p-5 input-form' >
-                <div className='shadow-lg p-3 m-3 w-100'>
+        <form onSubmit={handleFormSubmit} className='mx-lg-5 mx-2 px-lg-5'>
+            <div className='d-lg-flex justify-content-center text-center p-lg-5 p-3 input-form' >
+                <div className='shadow-lg p-3 m-lg-3 w-100'>
                     <h3>Personal details</h3>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>
@@ -83,7 +83,7 @@ function AddUser() {
                         <input type="text" onChange={handleInputChange} className="form-control" name='payment_code' />
                     </div>
                 </div>
-                <div className='shadow-lg p-3 m-3'>
+                <div className='shadow-lg p-3 m-lg-3 m-2'>
                     <p className='fw-bolder'>Verification Documents</p>
                     <p>upload ID card photos</p>
                     <div className="mb-3">
@@ -101,7 +101,7 @@ function AddUser() {
 
                 </div>
             </div>
-            <button type='submit' className='btn btn-primary'>submit</button>
+            <button type='submit' className='btn btn-primary mx-5'>submit</button>
 
         </form>
     )

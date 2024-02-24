@@ -63,7 +63,7 @@ const selectUsers = async (req, res) => {
             res.status(200).json({ message: "no users found" })  
         }
     } catch (error) {
-        throw error;
+        throw error;    
         next();
     }
 }
