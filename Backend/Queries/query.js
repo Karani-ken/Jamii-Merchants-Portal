@@ -37,10 +37,10 @@ const createSerialsTable = ` CREATE TABLE serials(
 )     
 `
 const insertSerials = 'INSERT INTO serials (user_id, serial_no created_at) VALUES (?, ?, NOW())'
-const insertCustomerDetails = `INSERT INTO customerDetails (name, email, phone, payment_code, created_at)
+const insertCustomerDetails = `INSERT INTO customerDetails (name, email, phone, payment_code, user_id, created_at)
 VALUES (?, ?, ?, ?, NOW())`;
 const AllCustomers = `SELECT * FROM customerDetails`;
-const filterCustomers = `SELECT * FROM customerdetails WHERE created_at BETWEEN ? AND ?`;
+const filterCustomers = `SELECT * FROM customerdetails WHERE created_at BETWEEN ? AND ? AND user_id = ? `;
  const deleteCustomerDetails = `DELETE FROM customerDetails WHERE email = ?`
  const showSerialsTableQuery = 'SHOW TABLES LIKE "serials"'
 module.exports = {

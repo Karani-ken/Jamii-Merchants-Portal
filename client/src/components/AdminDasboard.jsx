@@ -26,16 +26,16 @@ function AdminDasboard() {
   }
   return (
     <div className='admin-panel'>
-      <div className='text-center bg-dark mx-5 text-white'>
-        <h1>Admin</h1>
-        <div className="d-lg-flex justify-content-end bg-light">
+      <div className='text-center mx-5'>
+        <h1>Admin Dashboard</h1>
+        <div className="d-lg-flex justify-content-end bg-light my-5 ">
           <div className="shadow-lg text-dark p-3 rounded m-3" style={{ backgroundColor: '#34a832' }}>
             <button className='btn btn-primary bg-dark'
               onClick={() => navigate('/register')}>Add agent</button>
           </div>
           <div className="shadow-lg text-dark p-3 rounded m-3" style={{ backgroundColor: '#27c1cc' }}>
             <h4>Total Agents</h4>
-            <h6>10</h6>
+            <h6>{users.length}</h6>
           </div>
           <div className="shadow-lg text-dark p-3 rounded m-3" style={{ backgroundColor: '#de265d' }}>
             <h4>Allocated Serials</h4>
@@ -61,7 +61,7 @@ function AdminDasboard() {
             {users && users?.map((user) => {
               return (
                 <tr key={user.ID}>
-                  <th scope='row'>{user.name}</th>
+                  <th scope='row'>{user.ID}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>

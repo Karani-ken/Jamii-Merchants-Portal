@@ -66,9 +66,9 @@ const insertUser = async (userData) => {
     }
 }
 const filterCustomersByDate = async (filterDates) => {
-    const { startDate, endDate } = filterDates
+    const { startDate, endDate,user_id } = filterDates
     try {
-        const result = await executeQuery(queries.filterCustomers, [startDate, endDate]);
+        const result = await executeQuery(queries.filterCustomers, [startDate, endDate,user_id]);
         return result;
     } catch (error) {
 

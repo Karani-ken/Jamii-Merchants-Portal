@@ -3,6 +3,7 @@ import {jwtDecode} from 'jwt-decode'
 import { Link, useNavigate} from 'react-router-dom'
 const Sidebar = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [role, setRole] = useState('');
     const token = localStorage.getItem('token')
     const navigate = useNavigate()
     useEffect(() => {   
@@ -10,6 +11,7 @@ const Sidebar = () => {
       try {
         const decodeToken = jwtDecode(token)       
         setIsAuthenticated(true)
+        setRole(decodeToken.role); 
       } catch (error) {
         console.log('Error decoding token', error);
         setIsAuthenticated(false);
@@ -37,8 +39,15 @@ const Sidebar = () => {
                 </span>
                 <div className="links">
                     <ul>
-                        <li><Link to='/' >Dashboard</Link></li>
-                        <li> Reports</li>
+                        <li><Link to='/' >Home</Link></li>
+                        <li>
+                            {isAuthenticated && role === "admin" ? (
+                                <Link to='/admin'>Dashboard</Link>
+                            ):(
+                                <Link to='/agent'>Dashboard</Link>
+                            )}
+                        </li>
+                        <li> <Link to='/reports'>Reports</Link> </li>
                         {
                             isAuthenticated ? (
                                 <button className='btn custom-btn' onClick={hanldeLogOut}>Log out</button>

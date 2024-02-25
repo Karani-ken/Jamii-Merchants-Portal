@@ -80,10 +80,11 @@ const deleteCustomer = async (req, res) =>{
 }
 const filterCustomers = async (req, res) =>{
   try {
-    const {startDate, endDate} = req.body;
+    const {startDate, endDate,user_id} = req.body;
     const filterDates = {
       startDate,
-      endDate
+      endDate,
+      user_id
     }
     const results = await dbHandler.filterCustomersByDate(filterDates);
     res.status(200).json(results);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios'
 export const Register = () => {
     const [formData, setFormData] = useState(
@@ -23,6 +23,7 @@ export const Register = () => {
         try {
             const response = await axios.post('/auth/register', formData)
             console.log("register successfull", response.data);
+            Navigate('/login')
         } catch (error) {
             console.log('register failed', error)
         }

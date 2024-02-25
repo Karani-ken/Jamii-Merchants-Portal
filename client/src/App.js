@@ -9,11 +9,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AddSerial from './components/AddSerial';
 import AgentDashboard from './components/AgentDashboard';
 import AddUser from './components/AddUser';
+import Reports from './components/Reports';
+import HomePage from './components/HomePage';
 function App() {
   const [userRole, setUserRole] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
- /* useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
       try {
@@ -25,17 +27,19 @@ function App() {
         console.log('Error decoding token', error);
       }
     }
-  }, [userRole, isAuthenticated]);*/
+  }, [userRole, isAuthenticated])
   return (
     <div className="App">
       <Router>
         <Sidebar />
         <Routes>
-          <Route path='/' element={<AdminDasboard />} />
+          <Route path='/' exact element={<HomePage/>} />
+          <Route path='/admin' element={<AdminDasboard />} />
           <Route path='/agent' element={<AgentDashboard />} />        
           <Route path='/add-user' element={<AddUser />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/reports' element={<Reports/>} />
         </Routes>
       </Router>
 
