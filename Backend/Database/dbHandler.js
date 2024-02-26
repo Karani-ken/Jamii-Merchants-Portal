@@ -65,10 +65,11 @@ const insertUser = async (userData) => {
         throw error;
     }
 }
-const filterCustomersByDate = async (filterDates) => {
-    const { startDate, endDate,user_id } = filterDates
+const filterCustomersByDate = async (filterData) => {
+    const { startDate, endDate,user_id } = filterData
     try {
         const result = await executeQuery(queries.filterCustomers, [startDate, endDate,user_id]);
+        console.log(result)
         return result;
     } catch (error) {
 
@@ -91,9 +92,9 @@ const selectUserByRole = async (role) => {
     }
 }
 const insertCustomerDetails = async (userData) => {
-    const { name, email, phone, payment_code } = userData;
+    const { name, email, phone, payment_code,user_id } = userData;
     try {
-        await executeQuery(queries.insertCustomerDetails, [name, email, phone, payment_code]);
+        await executeQuery(queries.insertCustomerDetails, [name, email, phone, payment_code,user_id]);
         console.log('user added successfully')
     } catch (error) {
         throw error;

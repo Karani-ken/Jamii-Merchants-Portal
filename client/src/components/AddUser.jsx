@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import {jwtDecode} from 'jwt-decode'
 import axios from 'axios'
 function AddUser() {
+    const [userId, setUserId] = useState('');
     const [userData, setUserData] = useState({
         name: '',
         phone: '',
         email: '',
-        payment_code: '',
+        payment_code: '',       
         id_photo_front: null,
         id_photo_back: null
 
@@ -13,9 +15,22 @@ function AddUser() {
     const [imagePreviewFront, setImagePreviewFront] = useState(null);
     const [imagePreviewBack, setImagePreviewBack] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
+    const token = localStorage.getItem('token')
     const handleInputChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
     };
+    useEffect(() => {
+        if (token) {
+            try {
+                const decodeToken = jwtDecode(token)              
+                setUserId(decodeToken.userId)
+            } catch (error) {
+                console.log('Error decoding token', error);
+                           }
+        } else {
+            
+        }
+    }, [token]);
     const handleFileInputChange = (e, side) => {
         const file = e.target.files[0];
         setUserData({ ...userData, [side]: file });
@@ -32,6 +47,7 @@ function AddUser() {
             formData.append('phone', userData.phone);
             formData.append('email', userData.email);
             formData.append('payment_code', userData.payment_code);
+            formData.append('user_id', userId)
             formData.append('id_photo_front', userData.id_photo_front);
             formData.append('id_photo_back', userData.id_photo_back)
             const res = await axios.post('/customer/addcustomer', formData, {
@@ -46,12 +62,14 @@ function AddUser() {
                 phone: '',
                 email: '',
                 payment_code: '',
+                user_id: '',
                 id_photo_front: null,
                 id_photo_back: null
             });
             setImagePreviewFront(null);
             setImagePreviewBack(null);
             setIsLoading(false)
+            
         } catch (error) {
             console.log(error);
             setIsLoading(false)

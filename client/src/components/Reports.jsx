@@ -21,11 +21,12 @@ const Reports = () => {
         
     const handleGenerateReport = async () => {
         try {
-            const response = await axios.post('/customer/filter', {
+            const filterData = {
                 startDate: fromDate,
                 endDate: endDate,
                 user_id: selectedAgent
-            });
+            }
+            const response = await axios.post('/customer/filter', filterData);
             console.log(response.data)
             if(response.data.length > 0){
                 setClients(response.data);
@@ -46,7 +47,7 @@ const Reports = () => {
                     <option>select an agent</option>
                     {users && users?.map((user) => {
                         return (
-                            <option value={user.id} >{user.name}</option>
+                            <option value={user.ID} >{user.name}</option>
                         )
                     })}
                 </select>
@@ -56,7 +57,7 @@ const Reports = () => {
                 <div className='m-2 d-lg-flex justify-content-around'>
                     <div className='form-group'>
                         <label>From: </label>
-                        <input type="date" className='form-control' value={fromDate} onChange={(e)=> setFromDate(e.target.validationMessage)} />
+                        <input type="date" className='form-control' value={fromDate} onChange={(e)=> setFromDate(e.target.value)} />
                     </div>
                     <div className='form-group'>
                         <label>To: </label>

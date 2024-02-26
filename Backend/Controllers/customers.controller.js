@@ -13,18 +13,19 @@ const fs = require('fs')
 
 const addCustomerDetails = async (req, res) =>{
    try {
-    const {name,email, phone,payment_code} = req.body;
+    const {name,email, phone,payment_code,user_id} = req.body;
     const id_photo_front = req.files['id_photo_front'][0];
     const id_photo_back = req.files['id_photo_back'][0];
 
-    if(!name|| !email || !phone || !payment_code){
+    if(!name|| !email || !phone || !payment_code || !user_id){
         res.status(400).json({message: "all fields are required"})
     }
     const customerData = {    
         name,        
         email,
         phone,
-        payment_code
+        payment_code,
+        user_id
     }   
     const mailOptions = {
         from: process.env.EMAIL_USER, // Sender email address
@@ -81,12 +82,13 @@ const deleteCustomer = async (req, res) =>{
 const filterCustomers = async (req, res) =>{
   try {
     const {startDate, endDate,user_id} = req.body;
-    const filterDates = {
+    const filterData = {
       startDate,
       endDate,
       user_id
     }
-    const results = await dbHandler.filterCustomersByDate(filterDates);
+    const results = await dbHandler.filterCustomersByDate(filterData);
+    console.log(results)
     res.status(200).json(results);
   } catch (error) {
     throw error;

@@ -25,22 +25,22 @@ const createCustomerDetailsTable = `CREATE TABLE customerdetails (
     phone INT,
     payment_code VARCHAR(255) NOT NULL,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(ID) ,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP   
+    FOREIGN KEY (user_id) REFERENCES users(ID),
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )`   
 const createSerialsTable = ` CREATE TABLE serials(
     serial_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     serial_no DECIMAL(24,0),
     FOREIGN KEY (user_id) REFERENCES users(ID) ,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 )     
 `
 const insertSerials = 'INSERT INTO serials (user_id, serial_no created_at) VALUES (?, ?, NOW())'
-const insertCustomerDetails = `INSERT INTO customerDetails (name, email, phone, payment_code, user_id, created_at)
-VALUES (?, ?, ?, ?, NOW())`;
+const insertCustomerDetails = `INSERT INTO customerDetails (name, email, phone, payment_code, user_id, created_on)
+VALUES (?, ?, ?, ?,?, NOW())`;
 const AllCustomers = `SELECT * FROM customerDetails`;
-const filterCustomers = `SELECT * FROM customerdetails WHERE created_at BETWEEN ? AND ? AND user_id = ? `;
+const filterCustomers = `SELECT * FROM customerdetails WHERE DATE(created_on) BETWEEN ? AND ? AND user_id = ? `;
  const deleteCustomerDetails = `DELETE FROM customerDetails WHERE email = ?`
  const showSerialsTableQuery = 'SHOW TABLES LIKE "serials"'
 module.exports = {
