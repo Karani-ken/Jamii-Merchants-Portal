@@ -1,31 +1,31 @@
-import React, {useState,useEffect} from 'react'
-import {jwtDecode} from 'jwt-decode'
-import { Link, useNavigate} from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { jwtDecode } from 'jwt-decode'
+import { Link, useNavigate } from 'react-router-dom'
 const Sidebar = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [role, setRole] = useState('');
     const token = localStorage.getItem('token')
     const navigate = useNavigate()
-    useEffect(() => {   
-    if (token) {
-      try {
-        const decodeToken = jwtDecode(token)       
-        setIsAuthenticated(true)
-        setRole(decodeToken.role); 
-      } catch (error) {
-        console.log('Error decoding token', error);
-        setIsAuthenticated(false);
-      }
-    }else {
-        setIsAuthenticated(false)
-    }
-  },[isAuthenticated, token]);
+    useEffect(() => {
+        if (token) {
+            try {
+                const decodeToken = jwtDecode(token)
+                setIsAuthenticated(true)
+                setRole(decodeToken.role);
+            } catch (error) {
+                console.log('Error decoding token', error);
+                setIsAuthenticated(false);
+            }
+        } else {
+            setIsAuthenticated(false)
+        }
+    }, [isAuthenticated, token]);
 
-  const hanldeLogOut = () =>{
-    localStorage.removeItem('token');
-    navigate('/login')
-    window.location.reload()
-  }
+    const hanldeLogOut = () => {
+        localStorage.removeItem('token');
+        navigate('/login')
+        window.location.reload()
+    }
     return (
         <div>
             <input type="checkbox" id='check' />
@@ -39,29 +39,37 @@ const Sidebar = () => {
                 </span>
                 <div className="links">
                     <ul>
-                        <li><Link to='/' >Home</Link></li>
-                        <li>
-                            {isAuthenticated && role === "admin" ? (
-                                <Link to='/admin'>Dashboard</Link>
-                            ):(
-                                <Link to='/agent'>Dashboard</Link>
-                            )}
-                        </li>
-                        <li> <Link to='/reports'>Reports</Link> </li>
-                        {
-                            isAuthenticated ? (
+
+                        {isAuthenticated && role === "admin" ? (
+                            <>
+                                <li><Link to='/' >Home</Link></li>
+                                <li>
+                                    <Link to='/admin'>Dashboard</Link>
+                                </li>
+                                <li> <Link to='/reports'>Reports</Link> </li>
                                 <button className='btn custom-btn' onClick={hanldeLogOut}>Log out</button>
-                            ):(
-                                <Link to='/login' className='btn custom-btn'>Log in</Link>
-                            )
-                        }
-                       
+                            </>
+
+                        ) : isAuthenticated ?(
+                            <>
+                                <li><Link to='/' >Home</Link></li>
+                                <li><Link to='/agent'>Dashboard</Link></li>
+                                <button className='btn custom-btn' onClick={hanldeLogOut}>Log out</button>
+                            </>
+
+                        ):(
+                        <>
+                            <li><Link to='/' >Home</Link></li>
+                            <Link to='/login' className='btn custom-btn'>Log in</Link>
+                        </>
+                        )}
+
                     </ul>
 
                 </div>
             </div>
-   
-        </div>
+
+        </div >
     )
 }
 

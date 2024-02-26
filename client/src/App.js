@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode'
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import AdminDasboard from './components/AdminDasboard';
 import { Register } from './components/Register';
@@ -30,16 +31,17 @@ function App() {
   }, [userRole, isAuthenticated])
   return (
     <div className="App">
+      <ToastContainer/>
       <Router>
         <Sidebar />
         <Routes>
-          <Route path='/' exact element={<HomePage/>} />
+          <Route path='/' exact element={<HomePage />} />
           <Route path='/admin' element={<AdminDasboard />} />
-          <Route path='/agent' element={<AgentDashboard />} />        
+          <Route path='/agent' element={<AgentDashboard />} />
           <Route path='/add-user' element={<AddUser />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/reports' element={<Reports/>} />
+          <Route path='/reports' element={<Reports />} />
         </Routes>
       </Router>
 

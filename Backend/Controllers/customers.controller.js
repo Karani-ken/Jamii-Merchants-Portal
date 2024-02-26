@@ -92,7 +92,7 @@ const filterCustomers = async (req, res) =>{
     res.status(200).json(results);
   } catch (error) {
     throw error;
-  }
+  }    
 }
 const getAllCustomers = async (req, res) =>{
   try {

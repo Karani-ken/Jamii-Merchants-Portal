@@ -47,7 +47,7 @@ const Reports = () => {
                     <option>select an agent</option>
                     {users && users?.map((user) => {
                         return (
-                            <option value={user.ID} >{user.name}</option>
+                            <option value={user.ID} key={user.ID} >{user.name}</option>
                         )
                     })}
                 </select>

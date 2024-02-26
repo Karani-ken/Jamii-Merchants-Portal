@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {jwtDecode} from 'jwt-decode'
+import {toast} from 'react-toastify'
 import axios from 'axios'
 function AddUser() {
     const [userId, setUserId] = useState('');
@@ -69,7 +70,7 @@ function AddUser() {
             setImagePreviewFront(null);
             setImagePreviewBack(null);
             setIsLoading(false)
-            
+            toast.success("Client added successfully");
         } catch (error) {
             console.log(error);
             setIsLoading(false)
@@ -86,7 +87,7 @@ function AddUser() {
                             name='name' />
 
                     </div>
-                    <div className="mb-3">
+                    <div className="mb-3">      
                         <label htmlFor="exampleInputEmail1" className="form-label">Phone</label>
                         <input type="number" className="form-control"
                             onChange={handleInputChange} name='phone' />
