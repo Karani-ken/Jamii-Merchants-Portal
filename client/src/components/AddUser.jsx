@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import {jwtDecode} from 'jwt-decode'
 import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 function AddUser() {
+    const navigate = useNavigate()
     const [userId, setUserId] = useState('');
     const [userData, setUserData] = useState({
         name: '',
@@ -56,6 +58,7 @@ function AddUser() {
                     'Content-Type': 'multipart/form-data'
                 }
             })
+            
             toast.success("Client added successfully");
             // Reset form fields
             setUserData({
@@ -69,7 +72,7 @@ function AddUser() {
             });
             setImagePreviewFront(null);
             setImagePreviewBack(null);
-            setIsLoading(false)
+            navigate('/agent')
            
         } catch (error) {
             console.log(error);
