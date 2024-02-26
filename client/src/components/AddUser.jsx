@@ -56,7 +56,7 @@ function AddUser() {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            console.log('User added successfully:', res.data);
+            toast.success("Client added successfully");
             // Reset form fields
             setUserData({
                 name: '',
@@ -70,9 +70,10 @@ function AddUser() {
             setImagePreviewFront(null);
             setImagePreviewBack(null);
             setIsLoading(false)
-            toast.success("Client added successfully");
+           
         } catch (error) {
             console.log(error);
+            toast.error("something went wrong!!");
             setIsLoading(false)
         }
     }

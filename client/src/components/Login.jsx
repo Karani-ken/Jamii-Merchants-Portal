@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
+import {toast} from 'react-toastify'
 import axios from 'axios'
 const Login = () => {
     const navigate = useNavigate();   
@@ -24,9 +25,9 @@ const Login = () => {
             localStorage.setItem('token', token)
             navigate('/')
             window.location.reload()
-            console.log("login successfull", response.data);
-        } catch (error) {
-            console.log('login failed', error)
+            toast.success("Login successful");
+        } catch (error) {           
+            toast.error("Somethng went wrong!!");
         }
 
   

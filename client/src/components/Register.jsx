@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom';
+import {toast} from 'react-toastify'
 import axios from 'axios'
 export const Register = () => {
     const [formData, setFormData] = useState(
@@ -22,10 +23,11 @@ export const Register = () => {
         e.preventDefault();
         try {
             const response = await axios.post('/auth/register', formData)
-            console.log("register successfull", response.data);
+            toast.success("Register successfully");
             Navigate('/login')
         } catch (error) {
             console.log('register failed', error)
+            toast.error("register failed");
         }
     }
     return (

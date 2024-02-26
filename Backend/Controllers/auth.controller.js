@@ -1,15 +1,15 @@
 const bcrypt = require('bcrypt')
 const dbHandler = require('../Database/dbHandler')
 const jwt = require("jsonwebtoken")
-const register = async (req, res,next) => {
+const register = async (req, res) => {
     try {
-        const { name, email, password, phone,role } = req.body;
+        const { name, email, password, phone, role } = req.body;
         if (!name || !email || !password || !phone) {
-            res.status(400).json({ error: "All fields are required" });
+            return res.status(400).json({ error: "All fields are required" });
         }
         const user = await dbHandler.selectUserByEmail(email);
-        if(user.length > 0){
-            res.status(400).json({message: " email already exists"});
+        if (user.length > 0) {
+           return res.status(400).json({ message: " email already exists" });
         }
         //hash the password before saving it
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -21,15 +21,15 @@ const register = async (req, res,next) => {
             role,
         }
         await dbHandler.insertUser(userData);
-        res.status(201).json({ message: "User was added successfully" });
+        return res.status(201).json({ message: "User was added successfully" });
 
     } catch (error) {
-        throw error;
-        next();
+        console.error('Error adding customer details:', error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
-const login = async (req, res,next) => {
+const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         const user = await dbHandler.selectUserByEmail(email);
@@ -49,22 +49,23 @@ const login = async (req, res,next) => {
             process.env.JWT_SECRET, {
             expiresIn: "1h",
         })
-        res.status(200).json({ token });
+       return res.status(200).json({ token });
     } catch (error) {
-       throw error;
+        console.error('Error adding customer details:', error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
 const selectUsers = async (req, res) => {
     try {
         const result = await dbHandler.selectUsers();
         if (result.length > 0) {
-            res.status(200).json( result );
+            return res.status(200).json(result);
         } else {
-            res.status(200).json({ message: "no users found" })  
+            return res.status(200).json({ message: "no users found" })
         }
     } catch (error) {
-        throw error;    
-        next();
+        console.error('Error adding customer details:', error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
