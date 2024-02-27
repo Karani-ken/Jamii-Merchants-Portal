@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {jwtDecode} from 'jwt-decode'
-import {toast} from 'react-toastify'
+import { jwtDecode } from 'jwt-decode'
+import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 function AddUser() {
@@ -10,13 +10,17 @@ function AddUser() {
         name: '',
         phone: '',
         email: '',
-        payment_code: '',       
+        payment_code: '',
         id_photo_front: null,
-        id_photo_back: null
+        id_photo_back: null,
+        passport: null,
+        payment_pic: null
 
     });
     const [imagePreviewFront, setImagePreviewFront] = useState(null);
     const [imagePreviewBack, setImagePreviewBack] = useState(null);
+    const [imagePreviewPassport, setImagePreviewPassport] = useState(null)
+    const [imagePreviewPaymentPic, setImagePreviewPaymentPic] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
     const token = localStorage.getItem('token')
     const handleInputChange = (e) => {
@@ -25,21 +29,35 @@ function AddUser() {
     useEffect(() => {
         if (token) {
             try {
-                const decodeToken = jwtDecode(token)              
+                const decodeToken = jwtDecode(token)
                 setUserId(decodeToken.userId)
             } catch (error) {
                 console.log('Error decoding token', error);
-                           }
+            }
         } else {
-            
+
         }
     }, [token]);
     const handleFileInputChange = (e, side) => {
         const file = e.target.files[0];
         setUserData({ ...userData, [side]: file });
 
-        const imagePreviewFunc = side === 'id_photo_front' ? setImagePreviewFront : setImagePreviewBack;
-        imagePreviewFunc(URL.createObjectURL(file));
+        switch (side) {
+            case 'id_photo_front':
+                setImagePreviewFront(URL.createObjectURL(file));
+                break;
+            case 'id_photo_back':
+                setImagePreviewBack(URL.createObjectURL(file));
+                break;
+            case 'passport':
+                setImagePreviewPassport(URL.createObjectURL(file));
+                break;
+            case 'payment_pic':
+                setImagePreviewPaymentPic(URL.createObjectURL(file));
+                break;
+            default:
+                break;
+        }
     };
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -52,13 +70,15 @@ function AddUser() {
             formData.append('payment_code', userData.payment_code);
             formData.append('user_id', userId)
             formData.append('id_photo_front', userData.id_photo_front);
-            formData.append('id_photo_back', userData.id_photo_back)
+            formData.append('id_photo_back', userData.id_photo_back);
+            formData.append('passport', userData.passport);
+            formData.append('payment_pic', userData.payment_pic);
             const res = await axios.post('/customer/addcustomer', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            
+
             toast.success("Client added successfully");
             // Reset form fields
             setUserData({
@@ -68,12 +88,16 @@ function AddUser() {
                 payment_code: '',
                 user_id: '',
                 id_photo_front: null,
-                id_photo_back: null
+                id_photo_back: null,
+                passport: null,
+                payment_pic: null,
             });
             setImagePreviewFront(null);
             setImagePreviewBack(null);
+            setImagePreviewPassport(null);
+            setImagePreviewPaymentPic(null);
             navigate('/agent')
-           
+
         } catch (error) {
             console.log(error);
             toast.error("something went wrong!!");
@@ -91,7 +115,7 @@ function AddUser() {
                             name='name' />
 
                     </div>
-                    <div className="mb-3">      
+                    <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Phone</label>
                         <input type="number" className="form-control"
                             onChange={handleInputChange} name='phone' />
@@ -120,6 +144,36 @@ function AddUser() {
                         <input type="file" accept="image/png, image/jpeg, image/jpg"
                             onChange={(e) => handleFileInputChange(e, 'id_photo_back')} className="form-control" id="id-back" />
                         {imagePreviewBack && <img src={imagePreviewBack} alt="id back" style={{ height: '150px', width: '300px' }} />}
+                    </div>
+                    <p>Upload Passport</p>
+                    <div className="mb-3">
+                        <label htmlFor="passport" className="form-label">
+                            Passport
+                        </label>
+                        <input
+                            type="file"
+                            accept="image/png, image/jpeg, image/jpg"
+                            onChange={(e) => handleFileInputChange(e, 'passport')}
+                            className="form-control"
+                            id="passport"
+                        />
+                        {imagePreviewPassport && <img src={imagePreviewPassport} alt="Passport" style={{ height: '150px', width: '300px' }} />}
+                    </div>
+                    <p>Upload Payment Picture</p>
+                    <div className="mb-3">
+                        <label htmlFor="payment-pic" className="form-label">
+                            Payment Picture
+                        </label>
+                        <input
+                            type="file"
+                            accept="image/png, image/jpeg, image/jpg"
+                            onChange={(e) => handleFileInputChange(e, 'payment_pic')}
+                            className="form-control"
+                            id="payment-pic"
+                        />
+                        {imagePreviewPaymentPic && (
+                            <img src={imagePreviewPaymentPic} alt="Payment Picture" style={{ height: '150px', width: '300px' }} />
+                        )}
                     </div>
 
                 </div>
