@@ -80,17 +80,38 @@ const selectUserByEmail = async (email) => {
         const result = await executeQuery(queries.selectUserByEmail, [email]);
         return result;
     } catch (error) {
-        throw error;
+        console.error(error);
     }
 }
-const selectUserByRole = async (role) => {
+
+//update and save reset_token
+const resetToken = async (ResetData) =>{
+    const {token, expiration, email} = ResetData
     try {
-        const result = await executeQuery(queries.selectUserByRole, [role]);
+        await executeQuery(queries.updateUserResetToken, [token, expiration, email])
+    } catch (error) {
+        console.error(error)
+    }
+}
+//validate if the token is valid
+const validateToken = async (token) =>{
+    try {
+        const result = await executeQuery(queries.selectUserWithToken,[token])
         return result;
     } catch (error) {
-        throw error;
+        console.error(error)
     }
 }
+//reset password
+const resetPassword = async (passwordDetails) =>{
+    const {newPassword, token} = passwordDetails;
+    try {
+        await executeQuery(queries.updateUserPassword, [newPassword, token])
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 const insertCustomerDetails = async (userData) => {
     const { name, email, phone, payment_code,user_id } = userData;
     try {
@@ -159,5 +180,8 @@ module.exports = {
     deleteCustomerDetails,
     selectUserByRole,
     filterCustomersByDate,
-    allCustomers
+    allCustomers,
+    updateUserPassword,
+    updateUserResetToken,
+    validateToken
 }   

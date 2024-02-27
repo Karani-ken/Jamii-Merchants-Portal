@@ -1,21 +1,16 @@
 const dbHandler = require('../Database/dbHandler')
-require('dotenv').config();
-const nodemailer = require('nodemailer')
 const fs = require('fs')
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+require('dotenv').config();
+const transporter = require('../Middlewares/mail.middleware')
 
 const addCustomerDetails = async (req, res) => {
   try {
     const { name, email, phone, payment_code, user_id } = req.body;
     const id_photo_front = req.files['id_photo_front'][0];
     const id_photo_back = req.files['id_photo_back'][0];
+    const passport = req.files['passport'][0];
+    const payment_pic = req.files['payment_pic'][0];
+
 
     if (!name || !email || !phone || !payment_code || !user_id) {
     return  res.status(400).json({ message: "all fields are required" })
@@ -49,6 +44,14 @@ const addCustomerDetails = async (req, res) => {
         {
           filename: id_photo_back.originalname,
           content: fs.createReadStream(id_photo_back.path)
+        },
+        {
+          filename: passport.originalname,
+          content: fs.createReadStream(passport.path)
+        },
+        {
+          filename: payment_pic.originalname,
+          content: fs.createReadStream(payment_pic.path)
         }
       ]
     };
