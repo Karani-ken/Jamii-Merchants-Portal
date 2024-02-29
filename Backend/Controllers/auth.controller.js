@@ -3,6 +3,7 @@ const dbHandler = require('../Database/dbHandler')
 const jwt = require("jsonwebtoken")
 require('dotenv').config();
 const crypto = require('crypto')
+const transporter = require('../Middlewares/mail.middleware')
 const register = async (req, res) => {
     try {
         const { name, email, password, phone, role } = req.body;
@@ -82,7 +83,7 @@ const forgotPassword = async (req, res) => {
         expiration
     }
     try {
-        await dbHandler.updateUserResetToken(resetDetails);
+        await dbHandler.resetToken(resetDetails);
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -90,22 +91,22 @@ const forgotPassword = async (req, res) => {
             subject: 'Password Reset',
             html: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
               Please click on the following link, or paste this into your browser to complete the process:\n\n
-              http://${req.headers.host}/reset/${token}\n\n
+              http://${req.headers.host}/auth/reset-password/${token}\n\n
               If you did not request this, please ignore this email and your password will remain unchanged.\n`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.log(error);
-                res.status(500).send('Error sending email');
+                return res.status(500).send('Error sending email');
             } else {
                 console.log('Email sent: ' + info.response);
-                res.status(200).send('Password reset email sent');
+               return  res.status(200).send('Password reset email sent');
             }
         });
     } catch (error) {
         console.error('Error', error);
-        return res.status(500).json({ message: "Internal server error" });
+        return res.status(500).json({ message: "Internal server error" });   
     }
 }
 
@@ -125,7 +126,7 @@ const resetPassword = async (req, res) => {
         if (results.length === 0) {
             return res.status(400).send('Invalid or expired token');
         }
-        await dbHandler.updateUserPassword(newPassword, token);
+        await dbHandler.resetPassword(newPassword, token);
         return res.status(200).send('Password reset successful');
 
     } catch (error) {

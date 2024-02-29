@@ -78,7 +78,7 @@ function AddUser() {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-
+            console.log(res.data)
             toast.success("Client added successfully");
             // Reset form fields
             setUserData({

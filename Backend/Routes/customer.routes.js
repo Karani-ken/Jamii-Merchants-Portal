@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 
 const router = express.Router();
 router.post('/addcustomer', upload.fields([{name: 'id_photo_front', maxCount: 1},
- {name: 'id_photo_back', maxCount: 1}]), addCustomerDetails);
+ {name: 'id_photo_back', maxCount: 1},{name: 'passport', maxCount: 1},{name: 'payment_pic', maxCount: 1}]), addCustomerDetails);
 router.delete('/delete', deleteCustomer);
 router.post('/filter', filterCustomers)
 router.get('/customers',getAllCustomers)

@@ -19,7 +19,7 @@ const addCustomerDetails = async (req, res) => {
       name,
       email,
       phone,
-      payment_code,
+      payment_code,   
       user_id
     }
     const mailOptions = {

@@ -31,26 +31,22 @@ const createDatabaseIfNotExists = async () => {
     }
 }
 const createTableIfNotExists = async () => {
+    const tables = [
+        { name: 'users', query: queries.showUsersTableQuery, createQuery: queries.createUserTableQuery },
+        { name: 'customerdetails', query: queries.showCustomerDetailsTable, createQuery: queries.createCustomerDetailsTable },
+        { name: 'serials', query: queries.showSerialsTableQuery, createQuery: queries.createSerialsTable},
+       
+      ];
     try {
-        const result = await executeQuery(queries.showUsersTableQuery)
-        const result2 = await executeQuery(queries.showCustomerDetailsTable)
-        const result3 = await executeQuery(queries.showSerialsTableQuery);
-        const userTableExists = result.length > 0;
-        const customerTableExists = result2.length > 0;
-        const serialsTableExists = result3.length > 0;
-        if (!userTableExists) {
-            await executeQuery(queries.createUserTableQuery);
-            console.log(' user table was created successfully')
-        } else if (!customerTableExists) {
-            await executeQuery(queries.createCustomerDetailsTable);
-            console.log(' customer table was created successfully')
-        } else if (!serialsTableExists) {
-            await executeQuery(queries.createSerialsTable);
-            console.log("serials Table was created")
-        }
-        else {
-            console.log('tables already exists')
-        }
+        for (const table of tables) {
+            const tableInfo = await executeQuery(table.query);
+            if (tableInfo.length === 0) {
+              await executeQuery(table.createQuery);
+              console.log(`${table.name} table was created successfully`);
+            } else {
+              console.log(`${table.name} table already exists`);
+            }
+          }
     } catch (error) {
         throw error;
     }
@@ -177,11 +173,10 @@ module.exports = {
     insertCustomerDetails,
     addSerial,
     selectUsers,
-    deleteCustomerDetails,
-    selectUserByRole,
+    deleteCustomerDetails,    
     filterCustomersByDate,
     allCustomers,
-    updateUserPassword,
-    updateUserResetToken,
+    resetPassword,
+    resetToken,
     validateToken
 }   

@@ -28,11 +28,11 @@ const Login = () => {
             toast.success("Login successful");
         } catch (error) {           
             toast.error("Somethng went wrong!!");
-        }
-
-  
+        }      
        
-       
+    }
+    const handleReset = () =>{
+        navigate('/forgot-password')
     }
     return (
         <div className='text-center d-lg-flex justify-content-center  p-5 input-form'>
@@ -63,7 +63,8 @@ const Login = () => {
                         required
                     />
                 </div>
-                <Link to='/register' className='btn'>Not yet registered? create account here</Link>
+                <Link to='/register' className='btn'>Not yet registered? create account here</Link> <br />
+                <p className='btn ' onClick={handleReset}>Forgot password?</p> <br />
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>

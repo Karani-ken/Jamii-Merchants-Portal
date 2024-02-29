@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify'
 import axios from 'axios';
 
 const ResetPassword = () => {
@@ -10,11 +11,13 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`/reset/${token}`, { password });
+      await axios.post(`/auth/reset/${token}`, { password });
       setMessage('Password reset successful. You can now log in with your new password.');
+      toast.success("reeset was successfull")
     } catch (error) {
       console.error('Error resetting password:', error);
       setMessage('An error occurred. Please try again later.');
+      toast.error("error")
     }
   };
 

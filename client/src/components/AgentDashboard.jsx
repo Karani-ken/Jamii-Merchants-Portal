@@ -38,18 +38,7 @@ function AgentDashboard() {
       </div>
 
       <div className="table-responsive P-3 m-5">
-        <h3>Registered client details</h3>
-        <div className='m-2 d-flex justify-content-around'>
-          <div className='form-group'>
-            <label>From: </label>
-            <input type="date" className='form-control' />
-          </div>
-          <div className='form-group'>
-            <label>To: </label>
-            <input type="date" className='form-control'/>
-          </div>
-          <button className='btn btn-primary'>Generate Report</button>
-        </div>
+        <h3>Registered client details</h3>       
         <table className='table table-striped-columns table-hover'>
           <thead>
             <tr>
