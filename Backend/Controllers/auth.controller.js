@@ -114,22 +114,24 @@ const forgotPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
     const token = req.params.token;
     const newPassword = req.body.password;
-    const date = new Date();
+    const Currentdate = new Date();
 
     try {
         const tokenDetails = {
             token,
-            date
+            Currentdate
         }
         const results = await dbHandler.validateToken(tokenDetails)
 
         if (results.length === 0) {
             return res.status(400).send('Invalid or expired token');
         }
-        await dbHandler.resetPassword(newPassword, token);
+        const newPasswordHashed = await bcrypt.hash(newPassword, 10)
+        await dbHandler.resetPassword(newPasswordHashed, token);
         return res.status(200).send('Password reset successful');
+        console.log("reset was successful")
 
-    } catch (error) {
+    } catch (error) { 
         console.error('Error resetting password:', error);
         return res.status(500).json({ message: "Internal server error" });
     }

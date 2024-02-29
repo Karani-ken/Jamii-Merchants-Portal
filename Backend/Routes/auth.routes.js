@@ -3,10 +3,12 @@ const {register,login,selectUsers, forgotPassword, resetPassword} = require('../
 const {authenticateJWT} = require('../Middlewares/auth.middleware')
 const router = express.Router();
 
+
 router.post('/register', register);
 router.post('/login', login)
 router.get('/get-users', selectUsers);
 router.post('/forgot-password',forgotPassword);
-router.post('/reset-password', resetPassword)
+router.post('/reset-password/:token', resetPassword)
+
 
 module.exports = router

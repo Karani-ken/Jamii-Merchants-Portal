@@ -90,9 +90,10 @@ const resetToken = async (ResetData) =>{
     }
 }
 //validate if the token is valid
-const validateToken = async (token) =>{
+const validateToken = async (tokenDetails) =>{
+    const {token, Currentdate} = tokenDetails
     try {
-        const result = await executeQuery(queries.selectUserWithToken,[token])
+        const result = await executeQuery(queries.selectUserWithToken,[token, Currentdate])
         return result;
     } catch (error) {
         console.error(error)

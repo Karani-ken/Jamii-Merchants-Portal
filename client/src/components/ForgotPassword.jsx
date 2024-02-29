@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify'
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
-
+    const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -17,6 +18,9 @@ const ForgotPassword = () => {
             toast.error(message)
         }
     };
+    const handleRedirect =() =>{
+        navigate('/login')
+    }
 
     return (
         <div className='text-center d-lg-flex justify-content-center  p-5 input-form'>
@@ -35,7 +39,8 @@ const ForgotPassword = () => {
                     />
                 </div>
 
-                <button type="submit" className='btn btn-primary'>Send Reset Link</button>
+                <button type="submit" className='btn btn-primary mx-2'>Send Link</button>
+                <button onClick={handleRedirect} className='btn btn-secondary'>Cancle</button>
             </form>           
         </div>
     );
