@@ -14,7 +14,8 @@ import AddUser from './components/AddUser';
 import Reports from './components/Reports';
 import HomePage from './components/HomePage';
 import ForgotPassword from './components/ForgotPassword';
-import ResetPassword from './components/ResetPassword'
+import ResetPassword from './components/ResetPassword';
+
 function App() {
   const [userRole, setUserRole] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -46,7 +47,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/reports' element={<Reports />} />
           <Route path='/forgot-password' element={<ForgotPassword/>} />
-          <Route path='/auth/reset-password/:token' element={<ResetPassword/>} />
+          <Route path='/reset-password' element={<ResetPassword/>} />
         </Routes>
       </Router>
 

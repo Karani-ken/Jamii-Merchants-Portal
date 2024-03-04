@@ -33,8 +33,7 @@ const createDatabaseIfNotExists = async () => {
 const createTableIfNotExists = async () => {
     const tables = [
         { name: 'users', query: queries.showUsersTableQuery, createQuery: queries.createUserTableQuery },
-        { name: 'customerdetails', query: queries.showCustomerDetailsTable, createQuery: queries.createCustomerDetailsTable },
-        { name: 'serials', query: queries.showSerialsTableQuery, createQuery: queries.createSerialsTable},
+        { name: 'customerdetails', query: queries.showCustomerDetailsTable, createQuery: queries.createCustomerDetailsTable }     
        
       ];
     try {
@@ -81,29 +80,28 @@ const selectUserByEmail = async (email) => {
 }
 
 //update and save reset_token
-const resetToken = async (ResetData) =>{
-    const {token, expiration, email} = ResetData
+const resetOtp = async (ResetData) =>{
+    const {otp, expiration, email} = ResetData
     try {
-        await executeQuery(queries.updateUserResetToken, [token, expiration, email])
+        await executeQuery(queries.updateUserResetToken, [otp, expiration, email])
     } catch (error) {
         console.error(error)
     }
 }
 //validate if the token is valid
-const validateToken = async (tokenDetails) =>{
-    const {token, Currentdate} = tokenDetails
+const validateOtp = async (resetDetails) =>{
+    const {otp, Currentdate} = resetDetails
     try {
-        const result = await executeQuery(queries.selectUserWithToken,[token, Currentdate])
+        const result = await executeQuery(queries.selectUserWithToken,[otp, Currentdate])
         return result;
     } catch (error) {
         console.error(error)
     }
 }
 //reset password
-const resetPassword = async (passwordDetails) =>{
-    const {newPassword, token} = passwordDetails;
+const resetPassword = async (newPassword, otp) =>{    
     try {
-        await executeQuery(queries.updateUserPassword, [newPassword, token])
+        await executeQuery(queries.updateUserPassword, [newPassword, otp])
     } catch (error) {
         console.error(error)
     }
@@ -178,6 +176,6 @@ module.exports = {
     filterCustomersByDate,
     allCustomers,
     resetPassword,
-    resetToken,
-    validateToken
+    resetOtp,
+    validateOtp
 }   

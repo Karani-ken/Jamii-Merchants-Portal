@@ -8,8 +8,7 @@ export const Register = () => {
             name: '',
             phone: '',
             email: '',
-            password: '',
-            confirmpwd: ''
+            password: ''           
         }
     )
     const handleInputChange = (e) => {
@@ -82,18 +81,7 @@ export const Register = () => {
                         className="form-control"
                         required
                     />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="Password2" className="form-label"> Confirm Password</label>
-                    <input
-                        type="password"
-                        name='confirmpwd'
-                        value={formData.confirmpwd}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        required
-                    />
-                </div>
+                </div>               
                 <Link to='/login' className='btn'>Already have an account? Login here</Link>
                 <button type="submit" className="btn btn-primary">Register</button>
             </form>

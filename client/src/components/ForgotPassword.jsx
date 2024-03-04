@@ -12,6 +12,7 @@ const ForgotPassword = () => {
             await axios.post('/auth/forgot-password', { email });
             setMessage('Password reset email sent');
             toast.success(message)
+            navigate('/reset-password')
         } catch (error) {
             console.error('Error sending password reset email:', error);
             setMessage('An error occurred.');

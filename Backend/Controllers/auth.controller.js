@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt')
 const dbHandler = require('../Database/dbHandler')
 const jwt = require("jsonwebtoken")
 require('dotenv').config();
-const crypto = require('crypto')
 const transporter = require('../Middlewares/mail.middleware')
 const register = async (req, res) => {
     try {
@@ -41,7 +40,7 @@ const login = async (req, res, next) => {
         }
         const passwordmatch = await bcrypt.compare(password, user[0].password);
         if (!passwordmatch) {
-            return res.status(401).json({ error: "invalid credentials" });
+            return res.status(401).json({ error: "invalid credentials password" });
         }
         const token = jwt.sign({
             userId: user[0].ID,
@@ -75,33 +74,31 @@ const selectUsers = async (req, res) => {
 // forgot  password
 const forgotPassword = async (req, res) => {
     const email = req.body.email;
-    const token = crypto.randomBytes(20).toString('hex');
-    const expiration = new Date(Date.now() + 3600000); //expires in one hour
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generate a random 6-digit OTP code
+    const expiration = new Date(Date.now() + 3600000); // Expires in one hour
+
     const resetDetails = {
         email,
-        token,
+        otp,
         expiration
-    }
+    };
     try {
-        await dbHandler.resetToken(resetDetails);
+        await dbHandler.resetOtp(resetDetails);
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: 'Password Reset',
-            html: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
-              Please click on the following link, or paste this into your browser to complete the process:\n\n
-              http://${req.headers.host}/auth/reset-password/${token}\n\n
-              If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+            subject: 'Password Reset OTP',
+            text: `Your OTP (One-Time Password) for password reset is: ${otp}. This OTP is valid for one hour.`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.log(error);
-                return res.status(500).send('Error sending email');
+                return res.status(500).json('Error sending email');
             } else {
                 console.log('Email sent: ' + info.response);
-               return  res.status(200).send('Password reset email sent');
+               return  res.status(200).json('Password reset email sent');
             }
         });
     } catch (error) {
@@ -112,24 +109,25 @@ const forgotPassword = async (req, res) => {
 
 //reset pasword from submission handling
 const resetPassword = async (req, res) => {
-    const token = req.params.token;
+    const otp = req.body.otp;
     const newPassword = req.body.password;
     const Currentdate = new Date();
 
     try {
-        const tokenDetails = {
-            token,
+        const resetDetails = {
+            otp,
             Currentdate
         }
-        const results = await dbHandler.validateToken(tokenDetails)
+        const results = await dbHandler.validateOtp(resetDetails)
 
         if (results.length === 0) {
             return res.status(400).send('Invalid or expired token');
         }
         const newPasswordHashed = await bcrypt.hash(newPassword, 10)
-        await dbHandler.resetPassword(newPasswordHashed, token);
-        return res.status(200).send('Password reset successful');
+
+        await dbHandler.resetPassword(newPasswordHashed, otp);
         console.log("reset was successful")
+        return res.status(200).json('Password reset successful');        
 
     } catch (error) { 
         console.error('Error resetting password:', error);

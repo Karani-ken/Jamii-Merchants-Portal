@@ -9,17 +9,17 @@ const createUserTableQuery = `CREATE TABLE users (
     phone INT,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(255),
-    reset_token VARCHAR(255),
-    reset_token_expires VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    
+    otp VARCHAR(6), -- Assuming OTP is a 6-digit numeric code
+    otp_expires TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 `  
 const useDatabaseQuery = `USE ${dbConfig.database}`;
 const insertUsersQuery = 'INSERT INTO users (name, email,password,phone,role,created_at) VALUES (?, ?, ?, ?,?,NOW())';
 const selectUserByEmail = 'SELECT * FROM users WHERE email = ?'
-const updateUserResetToken = `UPDATE users SET reset_token = ?, reset_token_expires = ? WHERE email = ?`
-const selectUserWithToken = `SELECT * FROM users WHERE reset_token = ? AND reset_token_expires > ?`
-const updateUserPassword = `UPDATE users SET password = ?, reset_token = NULL, reset_token_expires = NULL WHERE reset_token = ?`
+const updateUserResetToken = `UPDATE users SET otp = ?, otp_expires = ? WHERE email = ?`
+const selectUserWithToken = `SELECT * FROM users WHERE otp = ? AND otp_expires > ?`
+const updateUserPassword = `UPDATE users SET password = ?, otp = NULL, otp_expires = NULL WHERE otp = ?`
 const selectAllUsers = 'SELECT * FROM users'
 const showCustomerDetailsTable = 'SHOW TABLES LIKE "customerdetails"';
 const createCustomerDetailsTable = `CREATE TABLE customerdetails (
