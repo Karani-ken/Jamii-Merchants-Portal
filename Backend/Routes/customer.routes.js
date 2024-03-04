@@ -1,5 +1,5 @@
 const express = require('express')
-const {addCustomerDetails,deleteCustomer,filterCustomers,getAllCustomers} = require('../Controllers/customers.controller')
+const {addCustomerDetails,deleteCustomer,filterCustomers,getAllCustomers, updateCustomerStatus} = require('../Controllers/customers.controller')
 const {authenticateJWT} = require('../Middlewares/auth.middleware')
 const path = require('path')
 const multer = require('multer')
@@ -20,5 +20,6 @@ router.post('/addcustomer', upload.fields([{name: 'id_photo_front', maxCount: 1}
 router.delete('/delete', deleteCustomer);
 router.post('/filter', filterCustomers)
 router.get('/customers',getAllCustomers)
+router.post('/update-status', updateCustomerStatus)
      
 module.exports = router

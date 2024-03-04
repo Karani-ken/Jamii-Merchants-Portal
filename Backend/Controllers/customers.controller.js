@@ -5,7 +5,7 @@ const transporter = require('../Middlewares/mail.middleware')
 
 const addCustomerDetails = async (req, res) => {
   try {
-    const { name, email, phone, payment_code, user_id } = req.body;
+    const { name, email, phone, payment_code, user_id} = req.body;
     const id_photo_front = req.files['id_photo_front'][0];
     const id_photo_back = req.files['id_photo_back'][0];
     const passport = req.files['passport'][0];
@@ -20,7 +20,8 @@ const addCustomerDetails = async (req, res) => {
       email,
       phone,
       payment_code,   
-      user_id
+      user_id,
+      status:"pending"
     }
     const mailOptions = {
       from: process.env.EMAIL_USER, // Sender email address
@@ -114,10 +115,22 @@ const getAllCustomers = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+const updateCustomerStatus = async (req, res)=>{
+  const {status, ID} = req.body
+  try {
+      await dbHandler.updateStatus(status,ID)
+      console.log("status updated successfully")
+      return res.status(201).json("updated successfully")
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({message:"Internal server error"})
+  }
+}
 
 module.exports = {
   addCustomerDetails,
   deleteCustomer,
   filterCustomers,
-  getAllCustomers
+  getAllCustomers,
+  updateCustomerStatus
 }

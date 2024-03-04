@@ -21,32 +21,25 @@ const updateUserResetToken = `UPDATE users SET otp = ?, otp_expires = ? WHERE em
 const selectUserWithToken = `SELECT * FROM users WHERE otp = ? AND otp_expires > ?`
 const updateUserPassword = `UPDATE users SET password = ?, otp = NULL, otp_expires = NULL WHERE otp = ?`
 const selectAllUsers = 'SELECT * FROM users'
-const showCustomerDetailsTable = 'SHOW TABLES LIKE "customerdetails"';
-const createCustomerDetailsTable = `CREATE TABLE customerdetails (
+const showCustomerDetailsTable = 'SHOW TABLES LIKE "customers"';
+const createCustomerDetailsTable = `CREATE TABLE customers (
     ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL,    
     email VARCHAR(255) UNIQUE NOT NULL,
     phone INT,
     payment_code VARCHAR(255) NOT NULL,
     user_id INT,
+    status VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(ID),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )`   
-const createSerialsTable = ` CREATE TABLE serials(
-    serial_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    serial_no DECIMAL(24,0),
-    FOREIGN KEY (user_id) REFERENCES users(ID) ,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
-)     
-`
-const insertSerials = 'INSERT INTO serials (user_id, serial_no created_at) VALUES (?, ?, NOW())'
-const insertCustomerDetails = `INSERT INTO customerDetails (name, email, phone, payment_code, user_id, created_on)
-VALUES (?, ?, ?, ?,?, NOW())`;
-const AllCustomers = `SELECT * FROM customerDetails`;
-const filterCustomers = `SELECT * FROM customerdetails WHERE DATE(created_on) BETWEEN ? AND ? AND user_id = ? `;
- const deleteCustomerDetails = `DELETE FROM customerDetails WHERE email = ?`
- const showSerialsTableQuery = 'SHOW TABLES LIKE "serials"'
+    )`  
+
+const insertCustomerDetails = `INSERT INTO customers (name, email, phone, payment_code, user_id, status,created_on)
+VALUES (?, ?, ?, ?,?,?, NOW())`;
+const updateCustomerStatus = `UPDATE customers SET status = ? WHERE ID = ?`
+const AllCustomers = `SELECT * FROM customers`;
+const filterCustomers = `SELECT * FROM customers WHERE DATE(created_on) BETWEEN ? AND ? AND user_id = ? `;
+ const deleteCustomerDetails = `DELETE FROM customers WHERE email = ?` 
 module.exports = {
     createDatabase,        
     showDatabases,
@@ -58,14 +51,12 @@ module.exports = {
     createCustomerDetailsTable,
     insertCustomerDetails,
     showCustomerDetailsTable,
-    deleteCustomerDetails,
-    createSerialsTable,
-    selectAllUsers,
-    insertSerials,
-    showSerialsTableQuery,
+    deleteCustomerDetails,   
+    selectAllUsers, 
     filterCustomers,
     AllCustomers,
-    updateUserPassword,
+    updateUserPassword,  
     updateUserResetToken,
-    selectUserWithToken
+    selectUserWithToken,
+    updateCustomerStatus
 }

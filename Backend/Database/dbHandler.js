@@ -33,19 +33,19 @@ const createDatabaseIfNotExists = async () => {
 const createTableIfNotExists = async () => {
     const tables = [
         { name: 'users', query: queries.showUsersTableQuery, createQuery: queries.createUserTableQuery },
-        { name: 'customerdetails', query: queries.showCustomerDetailsTable, createQuery: queries.createCustomerDetailsTable }     
-       
-      ];
+        { name: 'customers', query: queries.showCustomerDetailsTable, createQuery: queries.createCustomerDetailsTable }
+
+    ];
     try {
         for (const table of tables) {
             const tableInfo = await executeQuery(table.query);
             if (tableInfo.length === 0) {
-              await executeQuery(table.createQuery);
-              console.log(`${table.name} table was created successfully`);
+                await executeQuery(table.createQuery);
+                console.log(`${table.name} table was created successfully`);
             } else {
-              console.log(`${table.name} table already exists`);
+                console.log(`${table.name} table already exists`);
             }
-          }
+        }
     } catch (error) {
         throw error;
     }
@@ -61,9 +61,9 @@ const insertUser = async (userData) => {
     }
 }
 const filterCustomersByDate = async (filterData) => {
-    const { startDate, endDate,user_id } = filterData
+    const { startDate, endDate, user_id } = filterData
     try {
-        const result = await executeQuery(queries.filterCustomers, [startDate, endDate,user_id]);
+        const result = await executeQuery(queries.filterCustomers, [startDate, endDate, user_id]);
         console.log(result)
         return result;
     } catch (error) {
@@ -80,8 +80,8 @@ const selectUserByEmail = async (email) => {
 }
 
 //update and save reset_token
-const resetOtp = async (ResetData) =>{
-    const {otp, expiration, email} = ResetData
+const resetOtp = async (ResetData) => {
+    const { otp, expiration, email } = ResetData
     try {
         await executeQuery(queries.updateUserResetToken, [otp, expiration, email])
     } catch (error) {
@@ -89,17 +89,17 @@ const resetOtp = async (ResetData) =>{
     }
 }
 //validate if the token is valid
-const validateOtp = async (resetDetails) =>{
-    const {otp, Currentdate} = resetDetails
+const validateOtp = async (resetDetails) => {
+    const { otp, Currentdate } = resetDetails
     try {
-        const result = await executeQuery(queries.selectUserWithToken,[otp, Currentdate])
+        const result = await executeQuery(queries.selectUserWithToken, [otp, Currentdate])
         return result;
     } catch (error) {
         console.error(error)
     }
 }
 //reset password
-const resetPassword = async (newPassword, otp) =>{    
+const resetPassword = async (newPassword, otp) => {
     try {
         await executeQuery(queries.updateUserPassword, [newPassword, otp])
     } catch (error) {
@@ -108,12 +108,12 @@ const resetPassword = async (newPassword, otp) =>{
 }
 
 const insertCustomerDetails = async (userData) => {
-    const { name, email, phone, payment_code,user_id } = userData;
+    const { name, email, phone, payment_code, user_id,status } = userData;
     try {
-        await executeQuery(queries.insertCustomerDetails, [name, email, phone, payment_code,user_id]);
+        await executeQuery(queries.insertCustomerDetails, [name, email, phone, payment_code, user_id, status]);
         console.log('user added successfully')
     } catch (error) {
-        throw error;
+        console.log(Error)
     }
 }
 const deleteCustomerDetails = async (email) => {
@@ -121,7 +121,7 @@ const deleteCustomerDetails = async (email) => {
         await executeQuery(queries.deleteCustomerDetails, [email]);
         console.log('customer was deleted successfully')
     } catch (error) {
-        throw error
+        console.log(error)
     }
 }
 const allCustomers = async () => {
@@ -131,24 +131,23 @@ const allCustomers = async () => {
         return results
 
     } catch (error) {
-
+        console.log(error)
     }
 }
 const selectUsers = async () => {
     try {
         const result = await executeQuery(queries.selectAllUsers);
-       return result;
+        return result;
     } catch (error) {
         throw error;
     }
 }
-const addSerial = async (serialData) => {
+const updateStatus = async (ID, status) => {
     try {
-        const { user_id, serial_no } = serialData;
-        await executeQuery(queries.insertSerials, [user_id, serial_no])
-        console.log("User added successfully");
+        await executeQuery(queries.updateCustomerStatus,[ID, status])
+
     } catch (error) {
-        throw error;
+        console.log(error)
     }
 }
 
@@ -170,12 +169,12 @@ module.exports = {
     insertUser,
     selectUserByEmail,
     insertCustomerDetails,
-    addSerial,
     selectUsers,
-    deleteCustomerDetails,    
+    deleteCustomerDetails,
     filterCustomersByDate,
     allCustomers,
     resetPassword,
     resetOtp,
-    validateOtp
+    validateOtp,
+    updateStatus
 }   

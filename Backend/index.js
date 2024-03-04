@@ -4,7 +4,6 @@ const dbHandler = require('./Database/dbHandler')
 const bodyParser = require('body-parser');
 const authRoutes = require('./Routes/auth.routes')
 const customerRoutes = require('./Routes/customer.routes')
-const serialRoutes = require('./Routes/serials.routes')
 const path = require('path')
 const app = express();
 const port = process.env.PORT;
@@ -25,7 +24,6 @@ dbHandler.pool.getConnection((err, connection)=>{
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/auth', authRoutes);
 app.use('/customer', customerRoutes);
-app.use('/serial', serialRoutes)
 app.get('*', (req,res)=>{
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
 } )
