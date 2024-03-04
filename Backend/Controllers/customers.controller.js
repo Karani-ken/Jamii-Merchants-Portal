@@ -5,14 +5,14 @@ const transporter = require('../Middlewares/mail.middleware')
 
 const addCustomerDetails = async (req, res) => {
   try {
-    const { name, email, phone, payment_code, user_id} = req.body;
+    const { name, email, phone, payment_code, user_id, serial} = req.body;
     const id_photo_front = req.files['id_photo_front'][0];
     const id_photo_back = req.files['id_photo_back'][0];
     const passport = req.files['passport'][0];
     const payment_pic = req.files['payment_pic'][0];
 
 
-    if (!name || !email || !phone || !payment_code || !user_id) {
+    if (!name || !email || !phone || !payment_code || !user_id || !serial) {
     return  res.status(400).json({ message: "all fields are required" })
     }
     const customerData = {
@@ -21,7 +21,8 @@ const addCustomerDetails = async (req, res) => {
       phone,
       payment_code,   
       user_id,
-      status:"pending"
+      status:"pending",
+      serial
     }
     const mailOptions = {
       from: process.env.EMAIL_USER, // Sender email address
@@ -34,6 +35,7 @@ const addCustomerDetails = async (req, res) => {
                 <li>email: ${email} </li>
                 <li>phone: ${phone} </li>
                 <li>payment code: ${payment_code} </li>
+                <li>phone: ${serial} </li>
             </ul>            
           <p>Please find the attached ID card photos for verification.</p>
         `,
@@ -128,7 +130,7 @@ const updateCustomerStatus = async (req, res)=>{
 }
 
 module.exports = {
-  addCustomerDetails,
+  addCustomerDetails,   
   deleteCustomer,
   filterCustomers,
   getAllCustomers,

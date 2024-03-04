@@ -10,7 +10,8 @@ function AddUser() {
         name: '',
         phone: '',
         email: '',
-        payment_code: '',        
+        payment_code: '',
+        serial:'',        
         id_photo_front: null,
         id_photo_back: null,
         passport: null,
@@ -68,6 +69,7 @@ function AddUser() {
             formData.append('phone', userData.phone);
             formData.append('email', userData.email);
             formData.append('payment_code', userData.payment_code);
+            formData.append('serial', userData.serial)
             formData.append('user_id', userId)
             formData.append('id_photo_front', userData.id_photo_front);
             formData.append('id_photo_back', userData.id_photo_back);
@@ -85,7 +87,8 @@ function AddUser() {
                 name: '',
                 phone: '',
                 email: '',
-                payment_code: '',               
+                payment_code: '', 
+                serial:'',              
                 user_id: '',
                 id_photo_front: null,
                 id_photo_back: null,
@@ -128,6 +131,10 @@ function AddUser() {
                     <div className="mb-3">
                         <label htmlFor="mpesacode" className="form-label"> M-pesa Code</label>
                         <input type="text" onChange={handleInputChange} className="form-control" name='payment_code' />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="serial" className="form-label">Serial</label>
+                        <input type="text" onChange={handleInputChange} className="form-control" name='serial' />
                     </div>
                 </div>
                 <div className='shadow-lg p-3 m-lg-3 m-2'>

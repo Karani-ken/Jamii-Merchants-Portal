@@ -45,6 +45,8 @@ function AgentDashboard() {
               <th scope='col'>Name</th>
               <th scope='col'>Phone</th>
               <th scope='col'>Email</th>
+              <th scope='col'>status</th>
+              <th scope='col'>serial</th>
               <th scope='col'>Payment Code</th>
             </tr>
           </thead>
@@ -55,6 +57,8 @@ function AgentDashboard() {
                   <td>{client.name}</td>
                   <td>{client.email}</td>
                   <td>{client.phone}</td>
+                  <td>{client.status}</td>
+                  <td>{client.serial}</td>
                   <td>{client.payment_code}</td>
                 </tr>
               )

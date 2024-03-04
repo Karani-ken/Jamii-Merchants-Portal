@@ -30,12 +30,13 @@ const createCustomerDetailsTable = `CREATE TABLE customers (
     payment_code VARCHAR(255) NOT NULL,
     user_id INT,
     status VARCHAR(255),
+    serial VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(ID),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )`  
 
-const insertCustomerDetails = `INSERT INTO customers (name, email, phone, payment_code, user_id, status,created_on)
-VALUES (?, ?, ?, ?,?,?, NOW())`;
+const insertCustomerDetails = `INSERT INTO customers (name, email, phone, payment_code, user_id, status,serial,created_on)
+VALUES (?, ?, ?, ?,?,? ,? , NOW())`;
 const updateCustomerStatus = `UPDATE customers SET status = ? WHERE ID = ?`
 const AllCustomers = `SELECT * FROM customers`;
 const filterCustomers = `SELECT * FROM customers WHERE DATE(created_on) BETWEEN ? AND ? AND user_id = ? `;

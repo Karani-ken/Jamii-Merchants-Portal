@@ -108,9 +108,9 @@ const resetPassword = async (newPassword, otp) => {
 }
 
 const insertCustomerDetails = async (userData) => {
-    const { name, email, phone, payment_code, user_id,status } = userData;
+    const { name, email, phone, payment_code, user_id,status, serial } = userData;
     try {
-        await executeQuery(queries.insertCustomerDetails, [name, email, phone, payment_code, user_id, status]);
+        await executeQuery(queries.insertCustomerDetails, [name, email, phone, payment_code, user_id, status, serial]);
         console.log('user added successfully')
     } catch (error) {
         console.log(Error)

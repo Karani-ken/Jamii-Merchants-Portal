@@ -117,6 +117,7 @@ const Reports = () => {
                                 <th scope='col'>Phone</th>
                                 <th scope='col'>Email</th>
                                 <th scope='col'>status</th>
+                                <th scope='col'>serial</th>
                                 <th scope='col'>Payment Code</th>
                                 <th scope='col'>Action</th>
                             </tr>
@@ -129,6 +130,7 @@ const Reports = () => {
                                         <td>{client.phone}</td>
                                         <td>{client.email}</td>
                                         <td>{client.status}</td>
+                                        <td>{client.serial}</td>
                                         <td>{client.payment_code}</td>
                                         <td>
                                             <button className='btn btn-success' onClick={()=>handleApprove(client.ID)}>Approve</button>
