@@ -1,0 +1,39 @@
+[
+    {
+      "data_amount": "2.5GB",
+      "price": "100",
+      "validity": "3 days",
+      "bg":"#724706"
+    },
+    {
+      "data_amount": "8GB",
+      "price": "300",
+      "validity": "7 days",
+      "bg":"#86693d"
+    },
+    {
+      "data_amount": "15GB",
+      "price": "500",
+      "validity": "10 days",
+      "bg":"purple"
+    },
+    {
+      "data_amount": "30GB",
+      "price": "1000",
+      "validity": "30 days",
+      "bg":"#147e14"
+    },
+    {
+      "data_amount": "65GB",
+      "price": "2000",
+      "validity": "30 days",
+      "bg":"#097a5e"
+    },
+    {
+        "data_amount": "100GB",
+        "price": "3000",
+        "validity": "60 days",
+        "bg":"#a51167"
+      }
+  ]
+  
