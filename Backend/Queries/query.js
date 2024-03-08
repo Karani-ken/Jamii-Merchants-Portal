@@ -40,8 +40,8 @@ const insertCustomerDetails = `INSERT INTO customers (name, email, phone, paymen
 VALUES (?, ?, ?, ?,?,? ,? , NOW())`;
 const updateCustomerStatus = `UPDATE customers SET status = ? WHERE ID = ?`
 const AllCustomers = `SELECT * FROM customers`;
-const filterCustomers = `SELECT * FROM customers WHERE DATE(created_on) BETWEEN ? AND ? AND user_id = ? AND status = "approved"`;
- const deleteCustomerDetails = `DELETE FROM customers WHERE email = ?` 
+const filterCustomers = `SELECT * FROM customers WHERE DATE(created_on) BETWEEN ? AND ? AND user_id = ?`;
+const deleteCustomerDetails = `DELETE FROM customers WHERE email = ?` 
 module.exports = {
     createDatabase,        
     showDatabases,
@@ -61,5 +61,5 @@ module.exports = {
     updateUserResetToken,
     selectUserWithToken,
     updateCustomerStatus,
-    updateuserRole
+    updateuserRole,  
 }
