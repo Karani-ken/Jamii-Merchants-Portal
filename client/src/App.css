@@ -132,7 +132,7 @@ label #cancel{
   margin: 10px;
   width: 150px;
 }
-footer{
+.footer-contacts{
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -145,6 +145,14 @@ footer{
   padding: 5px;
   border-radius: 30px;
   border-style: outset;
+}
+.powered-by{
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 @media only screen and (max-width: 767px) {

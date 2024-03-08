@@ -146,6 +146,16 @@ const approveAgent = async(req,res) =>{
         
     }
 }
+const deleteUser = async (req, res)=>{
+    const email = req.body
+    try {
+        await dbHandler.deleteUser(email);
+        console.log("user deleted");
+        return res.status(200).json("user was deleted")
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 
 module.exports = {
@@ -154,5 +164,6 @@ module.exports = {
     selectUsers,
     forgotPassword,
     resetPassword,
-    approveAgent
+    approveAgent,
+    deleteUser
 }

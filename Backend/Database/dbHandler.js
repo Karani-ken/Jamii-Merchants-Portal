@@ -27,7 +27,7 @@ const createDatabaseIfNotExists = async () => {
             console.log('Database already exists');
         }
     } catch (error) {
-        throw error;
+        console.error(error)
     }
 }
 const createTableIfNotExists = async () => {
@@ -47,7 +47,7 @@ const createTableIfNotExists = async () => {
             }
         }
     } catch (error) {
-        throw error;
+        console.error(error)
     }
 }
 
@@ -57,7 +57,14 @@ const insertUser = async (userData) => {
         await executeQuery(queries.insertUsersQuery, [name, email, password, phone, role]);
         console.log('user added successfully')
     } catch (error) {
-        throw error;
+        console.error(error)
+    }
+}
+const deleteUser = async (email) =>{
+    try {
+        await executeQuery(queries.deleteUsers, [email])
+    } catch (error) {
+        console.error(error)
     }
 }
 const filterCustomersByDate = async (filterData) => {
@@ -67,7 +74,7 @@ const filterCustomersByDate = async (filterData) => {
         console.log(result)
         return result;
     } catch (error) {
-
+        console.error(error)
     }
 }
 const selectUserByEmail = async (email) => {
@@ -139,7 +146,7 @@ const selectUsers = async () => {
         const result = await executeQuery(queries.selectAllUsers);
         return result;
     } catch (error) {
-        throw error;
+        console.error(error)
     }
 }
 const updateStatus = async (ID, status) => {
@@ -154,7 +161,7 @@ const updateUserRole = async (ID, role) =>{
     try {
         await executeQuery(queries.updateuserRole, [ID, role]);
     } catch (error) {
-        
+        console.error(error)
     }
 }
 
@@ -165,7 +172,7 @@ const initializeDatabase = async () => {
         await createTableIfNotExists();
         //await createCustomerDetailsTableIfNotExists();
     } catch (error) {
-        throw error;
+        console.error(error)
     }
 }
 
@@ -184,5 +191,6 @@ module.exports = {
     resetOtp,
     validateOtp,
     updateStatus,
-    updateUserRole
+    updateUserRole,
+    deleteUser
 }   

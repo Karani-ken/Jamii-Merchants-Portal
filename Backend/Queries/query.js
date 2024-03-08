@@ -22,6 +22,7 @@ const selectUserWithToken = `SELECT * FROM users WHERE otp = ? AND otp_expires >
 const updateUserPassword = `UPDATE users SET password = ?, otp = NULL, otp_expires = NULL WHERE otp = ?`
 const selectAllUsers = 'SELECT * FROM users'
 const updateuserRole = 'UPDATE users SET role = ? WHERE ID = ?';
+const deleteUsers = `DELETE FROM users WHERE email = ?`
 const showCustomerDetailsTable = 'SHOW TABLES LIKE "customers"';
 const createCustomerDetailsTable = `CREATE TABLE customers (
     ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -41,7 +42,7 @@ VALUES (?, ?, ?, ?,?,? ,? , NOW())`;
 const updateCustomerStatus = `UPDATE customers SET status = ? WHERE ID = ?`
 const AllCustomers = `SELECT * FROM customers`;
 const filterCustomers = `SELECT * FROM customers WHERE DATE(created_on) BETWEEN ? AND ? AND user_id = ?`;
-const deleteCustomerDetails = `DELETE FROM customers WHERE email = ?` 
+const deleteCustomerDetails = `DELETE  FROM customers WHERE email = ?` 
 module.exports = {
     createDatabase,        
     showDatabases,
@@ -62,4 +63,5 @@ module.exports = {
     selectUserWithToken,
     updateCustomerStatus,
     updateuserRole,  
+    deleteUsers
 }

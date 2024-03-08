@@ -10,20 +10,43 @@ function AdminDasboard() {
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get('/auth/get-users')
-     
-      if (response.data.length > 0  ) {
+
+      if (response.data.length > 0) {
         setUsers(response.data)
         console.log(response.data)
       }
     }
     fetchData();
-  },[])
-  const handleButtonClick = () => {
+  }, [])
+  const handleApprove = async (id) => {
+    const role = "agent"
+    try {
+      const data = {
+        role,
+        id
+      }
+      const res = await axios.post('/auth/approve', data)
+      console.log(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+  const handleReject = async (email) => {  
+    try {
+      
+      const res = await axios.post('/auth/delete-user', email )
+      console.log(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  /*const handleButtonClick = () => {
     setShowModal(true)
   }
-  const handleCloseModal = () => {  
+  const handleCloseModal = () => {
     setShowModal(false);
-  }
+  }*/
   return (
     <div className='admin-panel'>
       <div className='text-center mx-5'>
@@ -53,7 +76,7 @@ function AdminDasboard() {
               <th scope='col'> Name</th>
               <th scope='col'> Email</th>
               <th scope='col'>Phone</th>
-              <th scope='col'>Serials</th>
+              {/** <th scope='col'>Serials</th> */}
               <th scope='col'>Action</th>
             </tr>
           </thead>
@@ -65,12 +88,15 @@ function AdminDasboard() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
-                  <td>6</td>
+                  {/**<td>6</td> */}
                   <td>
-                    <button onClick={handleButtonClick} className="btn btn-primary" style={{ background: '#048243', border: 'none' }}>
+                    {/** <button onClick={handleButtonClick} className="btn btn-primary" style={{ background: '#048243', border: 'none' }}>
                       Assign Serial
                     </button>
-                    <AssignSerialModal showModal={showModal} onClose={handleCloseModal} />
+                    <AssignSerialModal showModal={showModal} onClose={handleCloseModal} />*/}
+
+                    <button className='btn btn-success' onClick={() => handleApprove(user.ID)}>Approve</button>
+                    <button className='btn btn-danger' onClick={() => handleReject(user.email)}>Reject</button>
                   </td>
                 </tr>
               )
