@@ -9,7 +9,7 @@ const createUserTableQuery = `CREATE TABLE users (
     phone INT,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(255),
-    otp VARCHAR(6), -- Assuming OTP is a 6-digit numeric code
+    otp VARCHAR(6), 
     otp_expires TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
@@ -21,6 +21,7 @@ const updateUserResetToken = `UPDATE users SET otp = ?, otp_expires = ? WHERE em
 const selectUserWithToken = `SELECT * FROM users WHERE otp = ? AND otp_expires > ?`
 const updateUserPassword = `UPDATE users SET password = ?, otp = NULL, otp_expires = NULL WHERE otp = ?`
 const selectAllUsers = 'SELECT * FROM users'
+const updateuserRole = 'UPDATE users SET role = ? WHERE ID = ?';
 const showCustomerDetailsTable = 'SHOW TABLES LIKE "customers"';
 const createCustomerDetailsTable = `CREATE TABLE customers (
     ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -59,5 +60,6 @@ module.exports = {
     updateUserPassword,  
     updateUserResetToken,
     selectUserWithToken,
-    updateCustomerStatus
+    updateCustomerStatus,
+    updateuserRole
 }

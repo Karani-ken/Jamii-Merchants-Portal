@@ -150,6 +150,13 @@ const updateStatus = async (ID, status) => {
         console.log(error)
     }
 }
+const updateUserRole = async (ID, role) =>{
+    try {
+        await executeQuery(queries.updateuserRole, [ID, role]);
+    } catch (error) {
+        
+    }
+}
 
 const initializeDatabase = async () => {
     try {
@@ -176,5 +183,6 @@ module.exports = {
     resetPassword,
     resetOtp,
     validateOtp,
-    updateStatus
+    updateStatus,
+    updateUserRole
 }   

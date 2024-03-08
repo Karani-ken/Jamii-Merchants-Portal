@@ -134,6 +134,18 @@ const resetPassword = async (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 }
+const approveAgent = async(req,res) =>{
+    try {
+        const {ID, role} = req.body;
+        await dbHandler.updateUserRole(ID, role);
+        console.log("Agent Approved");
+        return res.status(200).json("Agent Approved");
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({message:"Internal server error"});
+        
+    }
+}
 
 
 module.exports = {
@@ -141,5 +153,6 @@ module.exports = {
     login,
     selectUsers,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    approveAgent
 }
