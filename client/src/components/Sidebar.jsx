@@ -42,7 +42,6 @@ const Sidebar = () => {
 
                         {isAuthenticated && role === "admin" ? (
                             <>
-                                <li><Link to='/' >Home</Link></li>
                                 <li>
                                     <Link to='/admin'>Dashboard</Link>
                                 </li>
@@ -50,18 +49,17 @@ const Sidebar = () => {
                                 <button className='btn custom-btn' onClick={hanldeLogOut}>Log out</button>
                             </>
 
-                        ) : isAuthenticated ?(
+                        ) : isAuthenticated ? (
                             <>
-                                <li><Link to='/' >Home</Link></li>
                                 <li><Link to='/agent'>Dashboard</Link></li>
                                 <button className='btn custom-btn' onClick={hanldeLogOut}>Log out</button>
                             </>
 
-                        ):(
-                        <>
-                            <li><Link to='/' >Home</Link></li>
-                            <Link to='/login' className='btn custom-btn'>Log in</Link>
-                        </>
+                        ) : (
+                            <>
+                                <li><Link to='/' >Home</Link></li>
+                                <Link to='/login' className='btn custom-btn'>Log in</Link>
+                            </>
                         )}
 
                     </ul>

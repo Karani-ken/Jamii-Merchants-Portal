@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AssignSerialModal from './AddSerial'
+import {toast} from 'react-toastify'
 import axios from 'axios'
 function AdminDasboard() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([])
   const [showModal, setShowModal] = useState(false);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get('/auth/get-users')
+      const response = await axios.get('/auth/get-users', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
 
       if (response.data.length > 0) {
         setUsers(response.data)
@@ -25,19 +31,31 @@ function AdminDasboard() {
         role,
         id
       }
-      const res = await axios.post('/auth/approve', data)
+      const res = await axios.post('/auth/approve', data, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      toast.success("Agent Approved");
       console.log(res.data)
     } catch (error) {
       console.log(error)
+      toast.error("Approval not successfull");
     }
 
   }
-  const handleReject = async (email) => {  
+  const handleReject = async (email) => {
     try {
-      
-      const res = await axios.post('/auth/delete-user', email )
+
+      const res = await axios.delete('/auth/delete-user', email, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      toast.success("Approval rejected");
       console.log(res.data)
     } catch (error) {
+      toast.success("Approval reject failed");
       console.log(error)
     }
   }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link,useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
 import axios from 'axios'
 const Login = () => {
@@ -23,7 +23,7 @@ const Login = () => {
             const token = response.data.token;
             //store the token in local storage
             localStorage.setItem('token', token)
-            navigate('/')
+            navigate('/dashboard')
             window.location.reload()
             toast.success("Login successful");
         } catch (error) {           
@@ -62,8 +62,7 @@ const Login = () => {
                         className="form-control"
                         required
                     />
-                </div>
-                <Link to='/register' className='btn'>Not yet registered? create account here</Link> <br />
+                </div>               
                 <p className='btn ' onClick={handleReset}>Forgot password?</p> <br />
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>

@@ -4,6 +4,7 @@ const dbHandler = require('./Database/dbHandler')
 const authRoutes = require('./Routes/auth.routes')
 const cors = require('cors')
 const customerRoutes = require('./Routes/customer.routes')
+const orderRoutes = require('./Routes/order.routes')
 const app = express();
 app.use(express.json());
 app.use(cors())
@@ -23,7 +24,8 @@ dbHandler.pool.getConnection((err, connection)=>{
 
 app.use('/auth', authRoutes);
 app.use('/customer', customerRoutes);
+app.use('/orders', orderRoutes)
 
-app.listen(()=>{
-   res.send(`<h1>Hello world I'm connected </h1>`)
+app.listen(4000, ()=>{
+    console.log("server started at port 4000")
 });  

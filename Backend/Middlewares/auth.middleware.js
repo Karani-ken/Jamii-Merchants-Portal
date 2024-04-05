@@ -1,33 +1,36 @@
 const jwt = require('jsonwebtoken');
+const dbHandler = require('../Database/dbHandler')
+const protect = async (req, res, next) => {
+    let token;
 
-const protect = async (req, res,next)=>{
-    let token 
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        try {
+            // Get token from header
+            token = req.headers.authorization.split(' ')[1];
 
-    if(req.headers.authorization && 
-        req.headers.authorization.startsWith('Bearer')){
-            try{
-                //get token from header
-                token = req.headers.authorization.split(' ')[1]
+            // Verify token
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            console.log(decoded)        
 
-                //verify token 
-                const decode = jwt.verify(token, secret)
-
-                //get user from the token
-
-                req.user = await User.findById(decode.id).select('-password')
-                next()
-
-            }catch(error){
-                console.log(error)
-                res.status(401)
-                throw new Error('Not authorized')       
-
+          
+            console.log(decoded?.role)
+            // Check if user is an admin
+            if (decoded?.role !== 'admin') {
+                console.error('Not authorized - Admin access required');
+                return res.status(403).json("Admin Access required");
             }
-        }     
 
-        if(!token){
-            res.status(401)
-            throw new Error('Not authorized, no token')
+            next();
+        } catch (error) {
+            console.error(error);
+           return res.status(401);
         }
-}
+    }
+
+    if (!token) {
+        console.error('Not authorized ');
+        return res.status(403).json("Not authorized");
+    }
+};
+
 module.exports = { protect };

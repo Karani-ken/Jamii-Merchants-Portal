@@ -12,9 +12,9 @@ import AddSerial from './components/AddSerial';
 import AgentDashboard from './components/AgentDashboard';
 import AddUser from './components/AddUser';
 import Reports from './components/Reports';
-import HomePage from './components/HomePage';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
+import Footer from './components/Footer';
 
 function App() {
   const [userRole, setUserRole] = useState('');
@@ -39,7 +39,7 @@ function App() {
       <Router>
         <Sidebar />
         <Routes>
-          <Route path='/' exact element={<HomePage />} />
+          <Route path='/' exact element={<Login />} />
           <Route path='/admin' element={<AdminDasboard />} />
           <Route path='/agent' element={<AgentDashboard />} />
           <Route path='/add-user' element={<AddUser />} />
@@ -49,6 +49,7 @@ function App() {
           <Route path='/forgot-password' element={<ForgotPassword/>} />
           <Route path='/reset-password' element={<ResetPassword/>} />
         </Routes>
+        <Footer/>
       </Router>
 
 

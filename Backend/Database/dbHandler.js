@@ -33,7 +33,9 @@ const createDatabaseIfNotExists = async () => {
 const createTableIfNotExists = async () => {
     const tables = [
         { name: 'users', query: queries.showUsersTableQuery, createQuery: queries.createUserTableQuery },
-        { name: 'customers', query: queries.showCustomerDetailsTable, createQuery: queries.createCustomerDetailsTable }
+        { name: 'customers', query: queries.showCustomerDetailsTable, createQuery: queries.createCustomerDetailsTable },
+        { name: 'orders', query: queries.showOrdersTable, createQuery: queries.ordersTable },
+        { name: 'orderItems', query: queries.showOrderItemsTable, createQuery: queries.orderItemsTable }
 
     ];
     try {
@@ -60,11 +62,22 @@ const insertUser = async (userData) => {
         console.error(error)
     }
 }
-const deleteUser = async (email) =>{
+const deleteUser = async (email) => {
     try {
         await executeQuery(queries.deleteUsers, [email])
     } catch (error) {
         console.error(error)
+    }
+}
+const selectUserById = async (id)=>{
+    try {
+        const user = await executeQuery(queries.selectOrderById,[id]);
+        console.log(user[0])
+        if(user){
+            return user;
+        }
+    } catch (error) {
+        
     }
 }
 const filterCustomersByDate = async (filterData) => {
@@ -115,7 +128,7 @@ const resetPassword = async (newPassword, otp) => {
 }
 
 const insertCustomerDetails = async (userData) => {
-    const { name, email, phone, payment_code, user_id,status, serial } = userData;
+    const { name, email, phone, payment_code, user_id, status, serial } = userData;
     try {
         await executeQuery(queries.insertCustomerDetails, [name, email, phone, payment_code, user_id, status, serial]);
         console.log('user added successfully')
@@ -151,13 +164,14 @@ const selectUsers = async () => {
 }
 const updateStatus = async (ID, status) => {
     try {
-        await executeQuery(queries.updateCustomerStatus,[ID, status])
+        await executeQuery(queries.updateCustomerStatus, [ID, status])
 
     } catch (error) {
         console.log(error)
     }
 }
-const updateUserRole = async (ID, role) =>{
+
+const updateUserRole = async (ID, role) => {
     try {
         await executeQuery(queries.updateuserRole, [ID, role]);
     } catch (error) {
@@ -165,6 +179,46 @@ const updateUserRole = async (ID, role) =>{
     }
 }
 
+//ORDERS 
+//insert order
+const createOrder = async (orderDetails, orderItems) => {
+    const { customer_name, customer_email, customer_contacts
+        , customer_location, phone_model, service } = orderDetails;
+
+    try {
+        const orderResult = await executeQuery(queries.insertOrder, [customer_name, customer_email, customer_contacts
+            , customer_location, phone_model, service])
+        const order_id = orderResult.insertId;
+        for (const itemData of orderItems) {
+            const { item_name, price } = itemData;
+            await executeQuery(queries.insertOrderItems, [order_id, item_name, price])
+        }
+        console.log("order was created successfully")
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+//get orders
+const getOrders = async () => {
+    try {
+        const response = await executeQuery(queries.fetchOrders)
+        console.log(response)
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+//get order by email
+const getOrderByEmail = async (email) => {
+    try {
+        const response = await executeQuery(queries.selectOrderByEmail, [email])
+        console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+}
 const initializeDatabase = async () => {
     try {
         await createDatabaseIfNotExists()
@@ -192,5 +246,9 @@ module.exports = {
     validateOtp,
     updateStatus,
     updateUserRole,
-    deleteUser
+    deleteUser,
+    createOrder,
+    getOrders,
+    getOrderByEmail,
+    selectUserById
 }   
